@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('usuario','name');
+            $table->renameColumn('senha','password');
+            $table->renameColumn('telefone','phone');
+            $table->renameColumn('creci','creci_number');
+            $table->renameColumn('cargo','occupation');
+            $table->renameColumn('foto','photo');
+            $table->string('email',50)->unique()->change();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+            $table->softDeletesDatetime()->after('updated_at');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -35,6 +39,7 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
     }
 
     /**
@@ -42,7 +47,18 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('name','usuario');
+            $table->renameColumn('password','senha');
+            $table->renameColumn('phone','telefone');
+            $table->renameColumn('creci_number','creci');
+            $table->renameColumn('occupation','cargo');
+            $table->renameColumn('photo','foto');
+            $table->dropColumn('email_verified_at');
+            $table->dropColumn('remember_token');
+            $table->dropColumn('deleted_at');
+        });
+
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
