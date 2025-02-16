@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Property extends Model
 {
@@ -30,4 +31,14 @@ class Property extends Model
         "service_rooms",
         "parking_spots"
     ];
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(Image::class,'original_id','id');
+    }
+
+    public static function favorites(int $limit = 8){
+        return Property::where('is_favorite', true)->with(['photos'])->latest()->take($limit);
+    }
+
 }
