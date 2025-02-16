@@ -7,7 +7,7 @@ export default function MainLayout({ children, title }){
         <>
             <Head title={title} />
             <Navbar/>
-            <main className="w-3/4 mx-auto">
+            <main>
                 {children}
             </main>
             <Footer/>
