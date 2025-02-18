@@ -11,49 +11,79 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::rename("imoveis","property");
+        if(Schema::hasTable('imoveis')){
+            Schema::rename("imoveis","property");
 
-        Schema::table("property",function(Blueprint $table){
-            $table->dateTime('created_at')->after("garagens")->change();
-            $table->dateTime('updated_at')->after("created_at")->change();
-            $table->softDeletesDatetime()->after("updated_at");
-            
-            $table->renameColumn("anuncio","listing");
-            $table->renameColumn("favorito","is_favorite");
-            $table->renameColumn("descricao","description");
-            $table->renameColumn('rua',"street");
-            $table->renameColumn('numero',"street_number");
-            $table->renameColumn('bairro',"neighborhood");
-            $table->renameColumn('cidade',"city");
-            $table->renameColumn('area',"area_size");
-            $table->renameColumn('valor',"price");
-            $table->renameColumn('taxa_condominio',"condo_fee");
-            $table->renameColumn('corretor',"agent_id");
-            $table->renameColumn('operacao',"operation_type");
-            $table->renameColumn('tipo',"property_type");
-            $table->renameColumn('quartos',"bedrooms");
-            $table->renameColumn('suites',"master_bedrooms");
-            $table->renameColumn('banheiros',"bathrooms");
-            $table->renameColumn('salas',"rooms");
-            $table->renameColumn('cozinhas',"kitchens");
-            $table->renameColumn('servicos',"service_rooms");
-            $table->renameColumn('garagens',"parking_spots");
-        });
+            Schema::table("property",function(Blueprint $table){
+                $table->dateTime('created_at')->after("garagens")->change();
+                $table->dateTime('updated_at')->after("created_at")->change();
+                $table->softDeletesDatetime()->after("updated_at");
+                
+                $table->renameColumn("anuncio","listing");
+                $table->renameColumn("favorito","is_favorite");
+                $table->renameColumn("descricao","description");
+                $table->renameColumn('rua',"street");
+                $table->renameColumn('numero',"street_number");
+                $table->renameColumn('bairro',"neighborhood");
+                $table->renameColumn('cidade',"city");
+                $table->renameColumn('area',"area_size");
+                $table->renameColumn('valor',"price");
+                $table->renameColumn('taxa_condominio',"condo_fee");
+                $table->renameColumn('corretor',"agent_id");
+                $table->renameColumn('operacao',"operation_type");
+                $table->renameColumn('tipo',"property_type");
+                $table->renameColumn('quartos',"bedrooms");
+                $table->renameColumn('suites',"master_bedrooms");
+                $table->renameColumn('banheiros',"bathrooms");
+                $table->renameColumn('salas',"rooms");
+                $table->renameColumn('cozinhas',"kitchens");
+                $table->renameColumn('servicos',"service_rooms");
+                $table->renameColumn('garagens',"parking_spots");
+            });
 
-        Schema::table("property",function(Blueprint $table){
-            $table->boolean("listing")->default(False)->change();
-            $table->boolean("is_favorite")->default(False)->change();
-            $table->integer("condo_fee")->default(0)->change();
-            $table->integer("bedrooms")->default(0)->change();
-            $table->integer("master_bedrooms")->default(0)->change();
-            $table->integer("bathrooms")->default(0)->change();
-            $table->integer("rooms")->default(0)->change();
-            $table->integer("rooms")->default(0)->change();
-            $table->integer("kitchens")->default(0)->change();
-            $table->integer("service_rooms")->default(0)->change();
-            $table->integer("parking_spots")->default(0)->change();
+            Schema::table("property",function(Blueprint $table){
+                $table->boolean("listing")->default(False)->change();
+                $table->boolean("is_favorite")->default(False)->change();
+                $table->integer("condo_fee")->default(0)->change();
+                $table->integer("bedrooms")->default(0)->change();
+                $table->integer("master_bedrooms")->default(0)->change();
+                $table->integer("bathrooms")->default(0)->change();
+                $table->integer("rooms")->default(0)->change();
+                $table->integer("rooms")->default(0)->change();
+                $table->integer("kitchens")->default(0)->change();
+                $table->integer("service_rooms")->default(0)->change();
+                $table->integer("parking_spots")->default(0)->change();
 
-        });
+            });
+        }
+        else
+        {
+            Schema::create('property', function(Blueprint $table){
+                $table->id();
+                $table->boolean('listing');
+                $table->boolean('is_favorite');
+                $table->text('description');
+                $table->string('street',100);
+                $table->integer('street_number');
+                $table->string('neighborhood',50);
+                $table->string('city',50);
+                $table->integer('area_size');
+                $table->integer('price');
+                $table->integer('condo_fee');
+                $table->string('agent_id',50);
+                $table->string('operation_type',50);
+                $table->string('property_type',50);
+                $table->integer('bedrooms');
+                $table->integer('master_bedrooms');
+                $table->integer('bathrooms');
+                $table->integer('rooms');
+                $table->integer('kitchens');
+                $table->integer('service_rooms');
+                $table->integer('parking_spots');
+                $table->timestamps();
+                $table->softDeletes();
+            });
+        }
     }
 
     /**

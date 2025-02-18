@@ -11,10 +11,22 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table("messages", function(Blueprint $table){
-            $table->renameColumn("autor","sender");
-            $table->renameColumn("texto","text");
-        });
+        if(Schema::hasTable('messages')){
+            Schema::table("messages", function(Blueprint $table){
+                $table->renameColumn("autor","sender");
+                $table->renameColumn("texto","text");
+            });
+        }
+        else
+        {
+            Schema::create('messages',function(Blueprint $table){
+                $table->id();
+                $table->timestamp('created-at');
+                $table->string('sender',50);
+                $table->string('email',50);
+                $table->text('text');
+            });
+        }
     }
 
     /**

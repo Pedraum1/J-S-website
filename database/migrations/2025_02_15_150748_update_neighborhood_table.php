@@ -11,11 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::rename("bairros","neighborhoods");
+        if(Schema::hasTable('bairros')){
+            Schema::rename("bairros","neighborhoods");
 
-        Schema::table("neighborhoods", function(Blueprint $table){
-            $table->renameColumn("bairro","neighborhood");
-        });
+            Schema::table("neighborhoods", function(Blueprint $table){
+                $table->renameColumn("bairro","neighborhood");
+            });
+        }
+        else
+        {
+            Schema::create('neighborhoods', function(Blueprint $table){
+                $table->id();
+                $table->string('neighborhood',50);
+            });
+        }
     }
 
     /**
