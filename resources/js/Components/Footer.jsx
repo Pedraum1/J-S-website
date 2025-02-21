@@ -39,11 +39,11 @@ export default function Footer() {
             <div className="w-4/5 mx-auto text-center text-sm border-t border-red-50 mt-4 pt-4">
                 © Copyright 2024 - J&S Corretores - Todos os direitos
                 reservados. Desenvolvido por{" "}
-                <Link href="https://github.com/Pedraum1">
+                <a href="https://github.com/Pedraum1">
                     <span className="underline underline-offset-2">
                         Pedro Paulo
                     </span>
-                </Link>
+                </a>
             </div>
         </footer>
     );
