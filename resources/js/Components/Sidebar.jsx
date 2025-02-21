@@ -14,14 +14,14 @@ export default function Sidebar() {
                 data-drawer-toggle="default-sidebar"
                 aria-controls="default-sidebar"
                 type="button"
-                class=""
+                className=""
             >
-                <i class="fa-solid fa-bars"></i>
+                <i className="fa-solid fa-bars"></i>
             </button>
 
             <aside
                 id="default-sidebar"
-                class={
+                className={
                     "fixed z-40 md:w-1/3 sm:w-2/5 w-9/12 h-screen transition-transform ease-in-out" +
                     (showSidebar
                         ? " -translate-x-10 shadow-xl shadow-gray-500"
@@ -29,32 +29,39 @@ export default function Sidebar() {
                 }
                 aria-label="Sidebar"
             >
-                <div class="h-full relative overflow-y-auto bg-white dark:bg-gray-800">
+                <div className="h-full relative overflow-y-auto bg-white dark:bg-gray-800">
                     <button
                         className="absolute right-4 top-4"
                         onClick={() => {
                             setShowSidebar(!showSidebar);
                         }}
                     >
-                        <i class="fa-solid fa-xmark"></i>
+                        <i className="fa-solid fa-xmark"></i>
                     </button>
-                    <ul class="space-y-2 font-medium flex flex-col justify-between p-8 h-full">
+                    <ul className="space-y-2 font-medium flex flex-col justify-between p-8 h-full">
                         <li className="flex justify-between">
                             <div className="w-1/2">
                                 <Logo />
                             </div>
                         </li>
-                        <li className="flex flex-col gap-y-4 text-xl h-1/2">
-                            <NavbarLink title="O que é a J&S?" link="/sobre" />
-                            <NavbarLink
-                                title="Nossos Serviços"
-                                link="/servicos"
-                            />
-                            <NavbarLink title="Imóveis" link="/imoveis" />
-                            <NavbarLink title="Contato" link="/contato" />
+                        <li className="h-1/2">
+                            <ul className="flex flex-col gap-y-4 text-xl">
+                                <NavbarLink
+                                    title="O que é a J&S?"
+                                    link="/sobre"
+                                />
+                                <NavbarLink
+                                    title="Nossos Serviços"
+                                    link="/servicos"
+                                />
+                                <NavbarLink title="Imóveis" link="/imoveis" />
+                                <NavbarLink title="Contato" link="/contato" />
+                            </ul>
                         </li>
                         <li>
-                            <NavbarLink title="Login" link="/login" />
+                            <ul>
+                                <NavbarLink title="Login" link="/login" />
+                            </ul>
                         </li>
                     </ul>
                 </div>

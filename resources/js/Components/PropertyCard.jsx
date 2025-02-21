@@ -28,27 +28,27 @@ export default function PorpertyCard({ property_data }) {
                     <div className="flex flex-row text-sm gap-x-4">
                         {property_data.bathrooms > 0 ? (
                             <div>
-                                <i class="fa-solid fa-toilet"></i> 1
+                                <i className="fa-solid fa-toilet"></i> 1
                             </div>
                         ) : (
                             ""
                         )}
                         {property_data.bathrooms > 0 ? (
                             <div>
-                                <i class="fa-solid fa-bed"></i> 1
+                                <i className="fa-solid fa-bed"></i> 1
                             </div>
                         ) : (
                             ""
                         )}
                         {property_data.bathrooms > 0 ? (
                             <div>
-                                <i class="fa-solid fa-car"></i> 1
+                                <i className="fa-solid fa-car"></i> 1
                             </div>
                         ) : (
                             ""
                         )}
                         <div>
-                            <i class="fa-solid fa-expand"></i>{" "}
+                            <i className="fa-solid fa-expand"></i>{" "}
                             {property_data.area_size} m²
                         </div>
                     </div>
