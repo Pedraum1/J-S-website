@@ -5,8 +5,8 @@ import StringInput from "@/Components/StringInput";
 import MainLayout from "@/Layouts/MainLayout";
 import { Head } from "@inertiajs/react";
 
-export default function Homepage({ properties }) {
-    console.log(properties);
+export default function Homepage({ properties, neighborhoods }) {
+    console.log(neighborhoods);
     return (
         <>
             <Head title="Página Inicial" />
@@ -46,7 +46,11 @@ export default function Homepage({ properties }) {
                             <div className="col-span-1">
                                 <SelectInput title="Bairro">
                                     <option value=""></option>
-                                    <option value="">Bairro</option>
+                                    {neighborhoods.map((neighborhood) => (
+                                        <option value="" key={neighborhood.id}>
+                                            {neighborhood.name}
+                                        </option>
+                                    ))}
                                 </SelectInput>
                             </div>
                             <div className="lg:col-span-1 col-span-2 text-center">
