@@ -6,7 +6,7 @@ export default function Outdoor() {
                     Garanta já o apartamento dos seus sonhos!
                 </h1>
             </div>
-            <section className="bg-white rounded-3xl px-2 max-w-[500px]">
+            <section className="bg-white rounded-3xl px-2 max-w-[500px] z-[3]">
                 <img src="/assets/tittle.png" className="" />
             </section>
             <img
