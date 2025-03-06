@@ -1,8 +1,11 @@
+import { usePage } from "@inertiajs/react";
 import NavbarLink from "./NavbarLink";
 import Sidebar from "./Sidebar";
 import Tittle from "./Tittle";
 
 export default function Navbar() {
+    const { auth } = usePage().props;
+
     return (
         <nav className="w-full py-2 shadow-lg">
             <div className="md:block hidden">
@@ -17,7 +20,11 @@ export default function Navbar() {
                         <NavbarLink title="Contato" link="/contato" />
                     </ul>
                     <ul>
-                        <NavbarLink title="Login" link="/login" />
+                        {auth.user ? (
+                            <NavbarLink title="Dashboard" link="/dashboard" />
+                        ) : (
+                            <NavbarLink title="Login" link="/login" />
+                        )}
                     </ul>
                 </section>
             </div>
