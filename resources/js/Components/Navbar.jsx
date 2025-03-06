@@ -13,7 +13,7 @@ export default function Navbar() {
                     <ul className="flex flex-row justify-center lg:gap-x-12 gap-x-4 text-lg items-center">
                         <NavbarLink title="O que é a J&S?" link="/sobre" />
                         <NavbarLink title="Nossos Serviços" link="/servicos" />
-                        <NavbarLink title="Imóveis" link="/imoveis" />
+                        <NavbarLink title="Imóveis" link="/imovel/pesquisar" />
                         <NavbarLink title="Contato" link="/contato" />
                     </ul>
                     <ul>

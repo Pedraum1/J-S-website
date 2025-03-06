@@ -12,9 +12,9 @@ Route::controller(GuestPagesController::class)->group(function(){
 });
 
 Route::controller(PropertyPagesController::class)->prefix('/imovel')->group(function(){
-    Route::get("/search","list");
-    Route::get("/search/{text}","search_property_by_name");
-    Route::get("/search/{type?}/{operation?}/{neighborhood?}/{max_value?}","search_property_by_fiters");
+    Route::get("/pesquisar","list");
+    Route::get("/pesquisar/{text}","search_property_by_name");
+    Route::get("/pesquisar/{type?}/{operation?}/{neighborhood?}/{max_value?}","search_property_by_fiters");
     Route::get("/{encrypted_id}","property_description");
 });
 
