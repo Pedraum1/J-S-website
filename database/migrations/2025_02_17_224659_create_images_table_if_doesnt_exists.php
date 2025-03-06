@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(!Schema::hasTable('images')){
+        if (! Schema::hasTable('images')) {
             Schema::create('images', function (Blueprint $table) {
                 $table->id();
                 $table->timestamp('created_at');
                 $table->int('original_id');
                 $table->string('type');
-                $table->string('name',200);
+                $table->string('name', 200);
             });
         }
     }

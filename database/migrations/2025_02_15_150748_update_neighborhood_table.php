@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(Schema::hasTable('bairros')){
-            Schema::rename("bairros","neighborhoods");
+        if (Schema::hasTable('bairros')) {
+            Schema::rename('bairros', 'neighborhoods');
 
-            Schema::table("neighborhoods", function(Blueprint $table){
-                $table->renameColumn("bairro","neighborhood");
+            Schema::table('neighborhoods', function (Blueprint $table) {
+                $table->renameColumn('bairro', 'neighborhood');
             });
-        }
-        else
-        {
-            Schema::create('neighborhoods', function(Blueprint $table){
+        } else {
+            Schema::create('neighborhoods', function (Blueprint $table) {
                 $table->id();
-                $table->string('neighborhood',50);
+                $table->string('neighborhood', 50);
             });
         }
     }
@@ -32,10 +30,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table("neighborhoods", function(Blueprint $table){
-            $table->renameColumn("neighborhood","bairro");
+        Schema::table('neighborhoods', function (Blueprint $table) {
+            $table->renameColumn('neighborhood', 'bairro');
         });
-        
-        Schema::rename("neighborhoods","bairros");
+
+        Schema::rename('neighborhoods', 'bairros');
     }
 };

@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Image extends Model
 {
-    protected $table = "images";
+    protected $table = 'images';
 
-    protected $fillable = ["original_id","type","name"];
+    protected $fillable = ['original_id', 'type', 'name'];
 
     public function property(): BelongsTo
     {
-        return $this->belongsTo(Property::class,"id","original_id");
+        return $this->belongsTo(Property::class, 'id', 'original_id');
     }
 }

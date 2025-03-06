@@ -11,19 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(Schema::hasTable('messages')){
-            Schema::table("messages", function(Blueprint $table){
-                $table->renameColumn("autor","sender");
-                $table->renameColumn("texto","text");
+        if (Schema::hasTable('messages')) {
+            Schema::table('messages', function (Blueprint $table) {
+                $table->renameColumn('autor', 'sender');
+                $table->renameColumn('texto', 'text');
             });
-        }
-        else
-        {
-            Schema::create('messages',function(Blueprint $table){
+        } else {
+            Schema::create('messages', function (Blueprint $table) {
                 $table->id();
                 $table->timestamp('created-at');
-                $table->string('sender',50);
-                $table->string('email',50);
+                $table->string('sender', 50);
+                $table->string('email', 50);
                 $table->text('text');
             });
         }
@@ -34,9 +32,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table("messages", function(Blueprint $table){
-            $table->renameColumn("sender","autor");
-            $table->renameColumn("text","texto");
+        Schema::table('messages', function (Blueprint $table) {
+            $table->renameColumn('sender', 'autor');
+            $table->renameColumn('text', 'texto');
         });
     }
 };

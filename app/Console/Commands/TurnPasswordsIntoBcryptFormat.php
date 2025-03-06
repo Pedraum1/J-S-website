@@ -30,20 +30,21 @@ class TurnPasswordsIntoBcryptFormat extends Command
         $verified_passwords = 0;
         $altered_passwords = 0;
 
-        foreach($users as $user){
+        foreach ($users as $user) {
             $verified_passwords++;
 
-            if(!$this->isPasswordBcrypted($user->password)){
+            if (! $this->isPasswordBcrypted($user->password)) {
                 $altered_passwords++;
                 $user->password = bcrypt($user->password);
                 $user->save();
             }
         }
-        $this->info("Verified passwords: " . $verified_passwords);
-        $this->info("Altered passwords: " . $altered_passwords);
+        $this->info('Verified passwords: '.$verified_passwords);
+        $this->info('Altered passwords: '.$altered_passwords);
     }
 
-    private function isPasswordBcrypted(string $password): Bool{
+    private function isPasswordBcrypted(string $password): bool
+    {
         return preg_match('/^\$2[ayb]\$\d{2}\$[\.\/A-Za-z0-9]{53}$/', $password) === 1;
     }
 }

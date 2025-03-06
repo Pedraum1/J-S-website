@@ -11,38 +11,36 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if(Schema::hasTable('users')){
+        if (Schema::hasTable('users')) {
 
             Schema::table('users', function (Blueprint $table) {
-                $table->renameColumn('usuario','name');
-                $table->renameColumn('senha','password');
-                $table->renameColumn('telefone','phone');
-                $table->renameColumn('creci','creci_number');
-                $table->renameColumn('cargo','occupation');
-                $table->renameColumn('foto','photo');
-                $table->string('email',50)->unique()->change();
+                $table->renameColumn('usuario', 'name');
+                $table->renameColumn('senha', 'password');
+                $table->renameColumn('telefone', 'phone');
+                $table->renameColumn('creci', 'creci_number');
+                $table->renameColumn('cargo', 'occupation');
+                $table->renameColumn('foto', 'photo');
+                $table->string('email', 50)->unique()->change();
                 $table->timestamp('email_verified_at')->nullable();
                 $table->rememberToken();
                 $table->softDeletesDatetime()->after('updated_at');
             });
-        }
-        else
-        {
-            Schema::create('users', function(Blueprint $table){
+        } else {
+            Schema::create('users', function (Blueprint $table) {
                 $table->id();
-                $table->string('name',50);
-                $table->string('email',50)->index('unique');
-                $table->string('password',255);
-                $table->string('phone',20);
-                $table->string('creci_number',50);
-                $table->string('occupation',20);
-                $table->string('photo',50);
+                $table->string('name', 50);
+                $table->string('email', 50)->index('unique');
+                $table->string('password', 255);
+                $table->string('phone', 20);
+                $table->string('creci_number', 50);
+                $table->string('occupation', 20);
+                $table->string('photo', 50);
                 $table->timestamps();
                 $table->softDeletes();
                 $table->timestamp('email_verified_at')->nullable();
                 $table->rememberToken();
             });
-        }        
+        }
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -59,7 +57,6 @@ return new class extends Migration
             $table->integer('last_activity')->index();
         });
 
-
     }
 
     /**
@@ -68,12 +65,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('name','usuario');
-            $table->renameColumn('password','senha');
-            $table->renameColumn('phone','telefone');
-            $table->renameColumn('creci_number','creci');
-            $table->renameColumn('occupation','cargo');
-            $table->renameColumn('photo','foto');
+            $table->renameColumn('name', 'usuario');
+            $table->renameColumn('password', 'senha');
+            $table->renameColumn('phone', 'telefone');
+            $table->renameColumn('creci_number', 'creci');
+            $table->renameColumn('occupation', 'cargo');
+            $table->renameColumn('photo', 'foto');
             $table->dropColumn('email_verified_at');
             $table->dropColumn('remember_token');
             $table->dropColumn('deleted_at');
