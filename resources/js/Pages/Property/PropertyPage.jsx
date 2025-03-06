@@ -1,11 +1,12 @@
 import { Carousel } from "flowbite-react";
 import MainLayout from "@/Layouts/MainLayout";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 import CarouselControl from "@/Components/CarouselControl";
 import RoomCard from "@/Components/RoomCard";
 import PropertyInfoLabel from "@/Components/PropertyInfoLabel";
 
 export default function PropertyPage() {
+    const { property } = usePage().props;
     //this array will be substituted futurelly for inertia dynamic data
     const images_array = [
         { id: 1, link: "no_image.png" },
@@ -16,7 +17,8 @@ export default function PropertyPage() {
 
     return (
         <>
-            <Head title="Imóvel" />
+        {/* TODO:Insert property's address on page tittle */}
+            <Head title={`${property.street}, ${property.street_number} - ${property.neighborhood}/${property.city}`} />
             <MainLayout>
                 <article className="h-96 xl:h-80 2xl:h-[700px]">
                     <Carousel
@@ -28,14 +30,15 @@ export default function PropertyPage() {
                         ))}
                     </Carousel>
                 </article>
-                <article className="md:w-3/4 w-[95%] bg-neutral-50 mx-auto mt-4 mb-8 shadow-zinc-400 shadow-xl rounded-3xl p-4">
+                <h1 className="text-3xl font-light my-4 md:w-3/4 mx-auto">{property.street}, {property.street_number} - {property.neighborhood}/{property.city}</h1>
+                <article className="md:w-3/4 w-[95%] bg-neutral-50 border border-neutral-200 mx-auto mt-4 mb-8 shadow-zinc-400 shadow-xl rounded-3xl p-4">
                     <header className="flex flex-wrap flex-row justify-center gap-y-3 mb-4 w-[90%] mx-auto">
-                        <PropertyInfoLabel title="aluguel" info="R$ XXX,XX"/>
-                        <PropertyInfoLabel title="quartos" info="X"/>
-                        <PropertyInfoLabel title="suítes" info="X"/>
-                        <PropertyInfoLabel title="garagens" info="X"/>
-                        <PropertyInfoLabel title="banheiros" info="X"/>
-                        <PropertyInfoLabel title="área total" info="XX m²"/>
+                        <PropertyInfoLabel title="aluguel" info={"R$" + property.price + ",00"}/>
+                        <PropertyInfoLabel title="quartos" info={property.rooms}/>
+                        <PropertyInfoLabel title="suítes" info={property.master_bedrooms}/>
+                        <PropertyInfoLabel title="garagens" info={property.parking_spots}/>
+                        <PropertyInfoLabel title="banheiros" info={property.bathrooms}/>
+                        <PropertyInfoLabel title="área total" info={property.area_size + " m²"}/>
                     </header>
 
                     <hr />
@@ -71,8 +74,7 @@ export default function PropertyPage() {
                             <hr className="my-4" />
                             <h3 className="font-medium md:text-3xl text-xl">Descrição</h3>
                             <p className="whitespace-pre-line md:text-base text-sm text-justify break-words mt-6">
-                                {/* TODO:Insert property description here */}
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit.Officiis sequi, assumenda, eaque cupiditate maiores placeat quo magni incidunt optio minima aut enim voluptate, doloremque illum ipsam explicabo debitis perspiciatis omnis?
+                                {property.description}
                             </p>
                         </div>
                     </section>
