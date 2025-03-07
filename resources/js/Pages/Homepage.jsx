@@ -69,7 +69,7 @@ export default function Homepage({ properties, neighborhoods }) {
                         <section className="grid grid-flow-row xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
                             {properties.map((property) => (
                                 <PropertyCard
-                                    key={property.id}
+                                    key={property.encrypted_id}
                                     property_data={property}
                                 />
                             ))}

@@ -3,11 +3,18 @@ import { Link } from "@inertiajs/react";
 export default function PorpertyCard({ property_data }) {
     return (
         <div className="min-h-96 md:max-w-80 max-w-96 min-w-72 col-span-1 row-span-1 shadow-2xl rounded-xl overflow-hidden bg-white hover:scale-105 hover:text-red-50 hover:bg-red-800 transition-all duration-300 ease-out">
-            <Link href={"/imovel/" + property_data.id}>
-                <img
+            <Link href={"/imovel/" + property_data.encrypted_id}>
+                {property_data.main_photo.length > 0 ? (
+                    <img
                     src={"/storage/" + property_data.photos[0].name}
                     className="object-cover h-64"
                 />
+                ) : (
+                    <img
+                    src={"/assets/no_image.png"}
+                    className="object-cover h-64"
+                />
+                )}
                 <div className="p-2">
                     <h3 className="text-xl">
                         {property_data.street}, {property_data.street_number} -{" "}
