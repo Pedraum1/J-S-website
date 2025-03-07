@@ -1,4 +1,5 @@
 import ActionButton from "@/Components/ActionButton";
+import PaginationButtonGroup from "@/Components/PaginationButtonGroup";
 import PropertyListCard from "@/Components/PropertyListCard";
 import SelectInput from "@/Components/SelectInput";
 import StringInput from "@/Components/StringInput";
@@ -6,7 +7,7 @@ import MainLayout from "@/Layouts/MainLayout";
 import { Head } from "@inertiajs/react";
 
 export default function PropertyList({ properties, neighborhoods }) {
-    console.log(properties);
+
     return (
         <>
             <Head title="Pesquisar imóveis" />
@@ -56,13 +57,16 @@ export default function PropertyList({ properties, neighborhoods }) {
                 </article>
 
                 <article className="p-4 my-4 mx-2 flex flex-col gap-y-4">
-                    {properties.map((property) => (
+                    {properties.data.map((property) => (
                         <PropertyListCard
                             key={property.encrypted_id}
                             property={property}
                         />
                     ))}
                 </article>
+                <section className="mx-auto md:w-fit w-[95%] my-4 text-center">
+                    <PaginationButtonGroup links={properties.links} />
+                </section>
             </MainLayout>
         </>
     );

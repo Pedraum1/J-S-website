@@ -12,7 +12,7 @@ class PropertyPagesController extends Controller
 {
     public function list()
     {
-        $properties = Property::with('main_photo')->latest()->get();
+        $properties = Property::with('main_photo')->latest()->paginate(10);
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
 
         foreach ($properties as $property) {
