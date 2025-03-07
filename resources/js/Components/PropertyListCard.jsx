@@ -33,7 +33,7 @@ export default function PropertyListCard({ property }) {
                                 <span className="bg-red-800 text-red-50 p-2 rounded-xl font-light">
                                     {property.operation_type}
                                 </span>{" "}
-                                R$ {property.price}
+                                R$ {property.price},00
                             </h5>
                         </div>
                     </div>

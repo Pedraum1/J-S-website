@@ -55,7 +55,7 @@ export default function PropertyList({ properties, neighborhoods }) {
                     </div>
                 </article>
 
-                <article className="p-4 my-4 mx-2">
+                <article className="p-4 my-4 mx-2 flex flex-col gap-y-4">
                     {properties.map((property) => (
                         <PropertyListCard
                             key={property.encrypted_id}
