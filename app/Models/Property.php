@@ -3,12 +3,17 @@
 namespace App\Models;
 
 use App\Encryption;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+use function PHPUnit\Framework\isEmpty;
+
 class Property extends Model
 {
+    use HasFactory;
+
     protected $table = 'property';
 
     protected $fillable = [
@@ -39,14 +44,14 @@ class Property extends Model
         return $this->hasMany(Image::class, 'original_id', 'id');
     }
 
-    public function main_photo(): HasOne
+    public function main_photo()
     {
-        return $this->hasOne(Image::class, 'original_id', 'id');
+        return $this->photos()->latest();
     }
 
     public static function favorites(int $limit = 8)
     {
-        return Property::where('is_favorite', true)->with(['photos'])->latest()->take($limit);
+        return Property::where('is_favorite', true)->with(['main_photo'])->take($limit);
     }
 
     public function encryptId(): void
