@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Encryption;
+use App\Services\Encryption;
 use App\Http\Controllers\Controller;
 use App\Models\Neighborhood;
 use App\Models\Property;
