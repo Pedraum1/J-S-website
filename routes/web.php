@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Adm\AdmPagesController;
 use App\Http\Controllers\Pages\GuestPagesController;
 use App\Http\Controllers\Pages\PropertyPagesController;
 use App\Http\Controllers\ProfileController;
@@ -17,14 +18,15 @@ Route::controller(PropertyPagesController::class)->prefix('/imovel')->group(func
     Route::get('/{encrypted_id}', 'property_description');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
+    Route::controller(AdmPagesController::class)->group(function (){
+        Route::get('/dashboard','dashboard')->name('dashboard');
+    });
 });
 
 require __DIR__.'/auth.php';
