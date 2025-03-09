@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Pages;
 
-use App\Services\Encryption;
 use App\Http\Controllers\Controller;
 use App\Models\Neighborhood;
 use App\Models\Property;
+use App\Services\Encryption;
 use Inertia\Inertia;
 
 class PropertyPagesController extends Controller
