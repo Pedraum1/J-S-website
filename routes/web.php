@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Adm\AdmPagesController;
+use App\Http\Controllers\Adm\PropertyController;
 use App\Http\Controllers\Pages\GuestPagesController;
 use App\Http\Controllers\Pages\PropertyPagesController;
 use App\Http\Controllers\ProfileController;
@@ -22,8 +22,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::controller(AdmPagesController::class)->group(function () {
-        Route::get('/dashboard', 'dashboard')->name('dashboard');
+    Route::controller(PropertyController::class)->prefix('/dashboard')->group(function () {
+        Route::get('/', 'index')->name('dashboard');
+        Route::get('/adicionar-imovel', 'create');
+
+        Route::put('/{encrypted_id}/toggle', 'toggle');
+        Route::put('/{encrypted_id}/favorite', 'favorite');
+
+        Route::delete('/{encrypted_id}', 'destroy');
     });
 });
 

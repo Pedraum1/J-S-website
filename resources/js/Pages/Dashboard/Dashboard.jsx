@@ -1,8 +1,14 @@
+import ActionButton from "@/Components/ActionButton";
+import PaginationButtonGroup from "@/Components/PaginationButtonGroup";
 import PropertyLabel from "@/Components/PropertyLabel";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 
 export default function Dashboard() {
+    const properties = usePage().props.properties.data;
+    const links = usePage().props.properties.links;
+
+    
     return (
         <AuthenticatedLayout
             header={
@@ -13,36 +19,48 @@ export default function Dashboard() {
         >
             <Head title="Dashboard" />
 
-            <section className="my-12 mx-auto max-w-7xl sm:p-6 lg:p-8 bg-white shadow-sm sm:rounded-lg">
-                <h2 className="text-3xl mb-4">Lista de imóveis</h2>
-
-                <div className="relative overflow-x-auto">
-                    <table className="w-full text-sm text-left rtl:text-right">
-                        <thead className="uppercase">
-                            <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    tipo
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    endereço
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    valor
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    ativo
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    ações
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <PropertyLabel/>
-                        </tbody>
-                    </table>
+            <header className="text-3xl mb-4 flex flex-row justify-between">
+                <div>
+                    <h2>Lista de imóveis</h2>
                 </div>
+                <div>
+                    <Link href="/dashboard/adicionar-imovel">
+                        <ActionButton>Adicionar Imóvel</ActionButton>
+                    </Link>
+                </div>
+            </header>
+
+            <section className="relative overflow-x-auto">
+                <table className="w-full text-sm text-left rtl:text-right">
+                    <thead className="uppercase">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                tipo
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                endereço
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                valor
+                            </th>
+                            <th scope="col" className="px-6 py-3 text-center">
+                                ações
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {properties.map((property) => (
+                            <PropertyLabel
+                                key={property.encrypted_id}
+                                property={property}
+                            />
+                        ))}
+                    </tbody>
+                </table>
             </section>
+            <footer className="my-4 w-fit mx-auto">
+                <PaginationButtonGroup links={links} />
+            </footer>
         </AuthenticatedLayout>
     );
 }

@@ -169,7 +169,7 @@ export default function AuthenticatedLayout({ header, children }) {
                 </header>
             )}
 
-            <main>{children}</main>
+            <main className='my-12 mx-auto max-w-7xl sm:p-6 lg:p-8 bg-white shadow-sm sm:rounded-lg'>{children}</main>
         </div>
     );
 }
