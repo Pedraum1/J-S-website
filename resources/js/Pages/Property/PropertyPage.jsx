@@ -7,7 +7,9 @@ import PropertyInfoLabel from "@/Components/PropertyInfoLabel";
 
 export default function PropertyPage() {
     const { property } = usePage().props;
-    //this array will be substituted futurelly for inertia dynamic data
+    const agent = property.agent;
+
+    //TODO: this array will be substituted futurelly for inertia dynamic data
     const images_array = [
         { id: 1, link: "no_image.png" },
         { id: 2, link: "no_image.png" },
@@ -49,18 +51,17 @@ export default function PropertyPage() {
                                 Informações de contato
                             </h3>
                             <div className="shadow-xl rounded-xl w-fit xl:w-[80%] mx-auto my-4 p-4 flex flex-row gap-x-6 items-center">
-                                {/* TODO: Insert agent's infos */}
                                 <img
                                     className="rounded-full w-24 h-24"
                                     src="/assets/no_profile.webp"
                                     alt="Extra large avatar"
                                 ></img>
                                 <div>
-                                    <h5 className="font-medium">Corretor responsável</h5>
-                                    <p>CRECI - XXXXXXXX </p>
+                                    <h5 className="font-medium">{agent.name}</h5>
+                                    <p>CRECI - {agent.creci_number} </p>
                                     <p>
                                         <i className="fa-solid fa-phone"></i>{" "}
-                                        (xx)xxxxx-xxxx
+                                        {agent.phone}
                                     </p>
                                 </div>
                             </div>

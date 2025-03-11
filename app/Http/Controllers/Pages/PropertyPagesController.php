@@ -33,7 +33,8 @@ class PropertyPagesController extends Controller
     public function property_description(string $encrypted_id)
     {
         $property_id = Encryption::decrypt($encrypted_id);
-        $data = Property::active()->find($property_id);
+        $data = Property::active()->with('agent')->find($property_id);
+        $data->agent->encryptId();
 
         if (! is_null($data)) {
             $data->encryptId();
