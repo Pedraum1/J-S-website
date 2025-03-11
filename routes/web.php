@@ -25,10 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::controller(PropertyController::class)->prefix('/dashboard')->group(function () {
         Route::get('/', 'index')->name('dashboard');
         Route::get('/adicionar-imovel', 'create')->name('dashboard.create');
-        Route::post('/store','store')->name('dashboard.store');
+        Route::post('/store', 'store')->name('dashboard.store');
 
-        Route::get('/atualizar-imovel/{encrypted_id}','edit')->name('dashboard.edit');
-        Route::patch('/update/{encrypted_id}','update')->name('dashboard.update');
+        Route::get('/atualizar-imovel/{encrypted_id}', 'edit')->name('dashboard.edit');
+        Route::patch('/update/{encrypted_id}', 'update')->name('dashboard.update');
 
         Route::put('/{encrypted_id}/toggle', 'toggle')->name('dashboard.toggle');
         Route::put('/{encrypted_id}/favorite', 'favorite')->name('dashboard.favorite');

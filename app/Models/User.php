@@ -52,8 +52,9 @@ class User extends Authenticatable
         ];
     }
 
-    public static function agents(){
-        return User::where('occupation','corretor');
+    public static function agents()
+    {
+        return User::where('occupation', 'corretor');
     }
 
     public function encryptId(): void
@@ -63,7 +64,8 @@ class User extends Authenticatable
         $this->makeHidden('id')->setAttribute('id', $encrypted_id);
     }
 
-    public function properties(): HasMany {
+    public function properties(): HasMany
+    {
         return $this->hasMany(Property::class, 'agent_id', 'id');
     }
 }

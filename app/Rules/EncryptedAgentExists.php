@@ -12,16 +12,14 @@ class EncryptedAgentExists implements ValidationRule
     /**
      * Determine if the validation rule passes.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
      * @return bool
      */
-    public function validate(string $attribute,mixed $value, Closure $fail): void
+    public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         try {
             $decryptedId = Encryption::decrypt($value);
 
-            if(!User::agents()->find($decryptedId)->exists()){
+            if (! User::agents()->find($decryptedId)->exists()) {
                 $fail('O :attribute selecionado é inválido.');
             }
         } catch (\Throwable $e) {

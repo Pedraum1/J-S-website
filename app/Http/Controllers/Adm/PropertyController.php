@@ -8,7 +8,6 @@ use App\Models\Neighborhood;
 use App\Models\Property;
 use App\Models\User;
 use App\Services\Encryption;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class PropertyController extends Controller
@@ -32,13 +31,13 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        $neighborhoods = Neighborhood::orderBy('name','asc')->get();
-        $agents = User::agents()->orderBy('name','asc')->get();
-        foreach($agents as $agent){
+        $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
+        $agents = User::agents()->orderBy('name', 'asc')->get();
+        foreach ($agents as $agent) {
             $agent->encryptId();
         }
 
-        return Inertia::render('Dashboard/AddProperty',['neighborhoods'=>$neighborhoods,'agents'=>$agents]);
+        return Inertia::render('Dashboard/AddProperty', ['neighborhoods' => $neighborhoods, 'agents' => $agents]);
     }
 
     /**
@@ -47,20 +46,20 @@ class PropertyController extends Controller
     public function store(PropertyStoreRequest $request)
     {
         $validated = $request->validated();
-        
-        if(is_null($validated['neighborhood'])){
-            Neighborhood::create(['name'=>$validated['new_neighborhood']]);
+
+        if (is_null($validated['neighborhood'])) {
+            Neighborhood::create(['name' => $validated['new_neighborhood']]);
             $validated['neighborhood'] = $validated['new_neighborhood'];
         }
-        unset($validated["new_neighborhood"]);
-        $validated += ["is_favorite"=>false];
+        unset($validated['new_neighborhood']);
+        $validated += ['is_favorite' => false];
 
         $validated['agent_id'] = Encryption::decrypt($validated['agent_id']);
-        
+
         Property::create($validated);
 
         return redirect(route('dashboard'));
-        
+
     }
 
     /**
@@ -79,17 +78,17 @@ class PropertyController extends Controller
         $property = Property::with('agent')->find(Encryption::decrypt($encrypted_id));
         $property->encryptId();
         $property->encryptAgentId();
- 
+
         $property->agent_name = $property->agent->name;
         $property->agent->encryptId();
 
-        $neighborhoods = Neighborhood::orderBy('name','asc')->get();
-        $agents = User::agents()->orderBy('name','asc')->get();
-        foreach($agents as $agent){
+        $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
+        $agents = User::agents()->orderBy('name', 'asc')->get();
+        foreach ($agents as $agent) {
             $agent->encryptId();
         }
 
-        return Inertia::render('Dashboard/EditProperty',['property'=>$property,'neighborhoods'=>$neighborhoods,'agents'=>$agents]);
+        return Inertia::render('Dashboard/EditProperty', ['property' => $property, 'neighborhoods' => $neighborhoods, 'agents' => $agents]);
     }
 
     /**
@@ -99,14 +98,14 @@ class PropertyController extends Controller
     {
         $validated = $request->validated();
         $property = Property::find(Encryption::decrypt($encrypted_id));
-        if(is_null($validated['neighborhood'])){
-            Neighborhood::create(['name'=>$validated['new_neighborhood']]);
+        if (is_null($validated['neighborhood'])) {
+            Neighborhood::create(['name' => $validated['new_neighborhood']]);
             $validated['neighborhood'] = $validated['new_neighborhood'];
         }
-        unset($validated["new_neighborhood"]);
-        
+        unset($validated['new_neighborhood']);
+
         $validated['agent_id'] = Encryption::decrypt($validated['agent_id']);
-        
+
         $property->update($validated);
 
         return redirect(route('dashboard'));

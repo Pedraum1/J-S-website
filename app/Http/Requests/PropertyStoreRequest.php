@@ -24,18 +24,18 @@ class PropertyStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'is_active'        => 'boolean',
-            'description'      => 'required|string',
-            'street'           => 'required|string|max:100',
-            'street_number'    => 'required|integer',
-            'neighborhood'     => 'required_without:new_neighborhood|prohibits:new_neighborhood|nullable|max:50',
+            'is_active' => 'boolean',
+            'description' => 'required|string',
+            'street' => 'required|string|max:100',
+            'street_number' => 'required|integer',
+            'neighborhood' => 'required_without:new_neighborhood|prohibits:new_neighborhood|nullable|max:50',
             'new_neighborhood' => 'required_without:neighborhood|prohibits:neighborhood|string|nullable|max:50',
-            'city'             => 'required|string|max:50',
-            'area_size'        => 'required|integer|min:1',
-            'price'            => 'required|integer|min:1',
-            'condo_fee'        => 'nullable|integer|min:0',
-            'agent_id'         => ['required','string','max:255',new EncryptedAgentExists],
-            'operation_type'   => [
+            'city' => 'required|string|max:50',
+            'area_size' => 'required|integer|min:1',
+            'price' => 'required|integer|min:1',
+            'condo_fee' => 'nullable|integer|min:0',
+            'agent_id' => ['required', 'string', 'max:255', new EncryptedAgentExists],
+            'operation_type' => [
                 'required',
                 Rule::in(['Aluguel', 'Venda', 'Temporada']),
             ],
@@ -43,20 +43,18 @@ class PropertyStoreRequest extends FormRequest
                 'required',
                 Rule::in(['Casa', 'Apartamento', 'Ponto Comercial', 'Terreno', 'Sala']),
             ],
-            'bedrooms'        => 'required|integer|min:0',
+            'bedrooms' => 'required|integer|min:0',
             'master_bedrooms' => 'required|integer|min:0',
-            'bathrooms'       => 'required|integer|min:0',
-            'rooms'           => 'required|integer|min:0',
-            'kitchens'        => 'required|integer|min:0',
-            'service_rooms'   => 'nullable|integer|min:0',
-            'parking_spots'   => 'nullable|integer|min:0',
+            'bathrooms' => 'required|integer|min:0',
+            'rooms' => 'required|integer|min:0',
+            'kitchens' => 'required|integer|min:0',
+            'service_rooms' => 'nullable|integer|min:0',
+            'parking_spots' => 'nullable|integer|min:0',
         ];
     }
 
     /**
      * Get custom messages for validator errors.
-     *
-     * @return array
      */
     public function messages(): array
     {
@@ -78,8 +76,6 @@ class PropertyStoreRequest extends FormRequest
 
     /**
      * Get custom attributes for validator errors.
-     *
-     * @return array
      */
     public function attributes(): array
     {

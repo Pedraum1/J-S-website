@@ -73,6 +73,6 @@ class Property extends Model
 
     public function agent(): BelongsTo
     {
-        return $this->belongsTo(User::class,'agent_id','id');
+        return $this->belongsTo(User::class, 'agent_id', 'id');
     }
 }

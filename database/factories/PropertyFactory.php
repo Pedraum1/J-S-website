@@ -32,7 +32,7 @@ class PropertyFactory extends Factory
             'condo_fee' => $this->faker->randomNumber(3),
             'agent_id' => $this->faker->randomElement(['JP', 'SQ']),
             'operation_type' => $this->faker->randomElement(['Aluguel', 'Compra', 'Temporada']),
-            'property_type' => $this->faker->randomElement(['Apartamento', 'Casa', 'Ponto Comercial','Terreno','Sala']),
+            'property_type' => $this->faker->randomElement(['Apartamento', 'Casa', 'Ponto Comercial', 'Terreno', 'Sala']),
             'bedrooms' => $this->faker->randomNumber(1),
             'master_bedrooms' => $this->faker->randomNumber(1),
             'bathrooms' => $this->faker->randomNumber(1),

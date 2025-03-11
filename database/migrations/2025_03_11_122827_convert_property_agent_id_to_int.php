@@ -41,11 +41,11 @@ return new class extends Migration
         });
 
         DB::statement("UPDATE property SET agent_id_old = 'SQ' WHERE agent_id = 21");
-        
+
         DB::statement("UPDATE property SET agent_id_old = 'JP' WHERE agent_id = 22");
-        
-        DB::statement("UPDATE property SET agent_id_old = CAST(agent_id AS CHAR) 
-                      WHERE agent_id != 21 AND agent_id != 22");
+
+        DB::statement('UPDATE property SET agent_id_old = CAST(agent_id AS CHAR) 
+                      WHERE agent_id != 21 AND agent_id != 22');
 
         Schema::table('property', function (Blueprint $table) {
             $table->dropColumn('agent_id');
