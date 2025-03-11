@@ -17,7 +17,7 @@ return new class extends Migration
 
         Log::info('Unique values in property_type table: ', $unique_values);
 
-        $correct_values = ['Casa', 'Apartamento', 'Terreno', 'Ponto Cormercial', 'Sala'];
+        $correct_values = ['Casa', 'Apartamento', 'Terreno', 'Ponto Comercial', 'Sala'];
         $wrong_values = array_diff($unique_values, $correct_values);
 
         if (count($wrong_values) > 0) {
