@@ -8,7 +8,6 @@ export default function Dashboard() {
     const properties = usePage().props.properties.data;
     const links = usePage().props.properties.links;
 
-    
     return (
         <AuthenticatedLayout
             header={
@@ -19,15 +18,8 @@ export default function Dashboard() {
         >
             <Head title="Dashboard" />
 
-            <header className="text-3xl mb-4 flex flex-row justify-between">
-                <div>
-                    <h2>Lista de imóveis</h2>
-                </div>
-                <div>
-                    <Link href="/dashboard/adicionar-imovel">
-                        <ActionButton>Adicionar Imóvel</ActionButton>
-                    </Link>
-                </div>
+            <header className="text-3xl mb-4">
+                <h2>Lista de imóveis</h2>
             </header>
 
             <section className="relative overflow-x-auto">

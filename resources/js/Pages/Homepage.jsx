@@ -16,7 +16,6 @@ export default function Homepage({ properties, neighborhoods }) {
 
     const submitFilter = (e) => {
         e.preventDefault();
-        console.log(data);
 
         get(route('property.filter'));
     };
