@@ -12,7 +12,7 @@ class PropertyPagesController extends Controller
 {
     public function list()
     {
-        $properties = Property::with('main_photo')->latest()->paginate(10);
+        $properties = Property::active()->with('main_photo')->latest()->paginate(10);
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
 
         foreach ($properties as $property) {
@@ -33,9 +33,14 @@ class PropertyPagesController extends Controller
     public function property_description(string $encrypted_id)
     {
         $property_id = Encryption::decrypt($encrypted_id);
-        $data = Property::find($property_id);
-        $data->encryptId();
+        $data = Property::active()->find($property_id);
 
-        return Inertia::render('Property/PropertyPage', ['property' => $data->toArray()]);
+        if (! is_null($data)) {
+            $data->encryptId();
+
+            return Inertia::render('Property/PropertyPage', ['property' => $data->toArray()]);
+        }
+
+        return redirect()->route('property.list');
     }
 }

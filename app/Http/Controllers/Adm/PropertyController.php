@@ -70,7 +70,7 @@ class PropertyController extends Controller
     public function toggle(string $encrypted_id)
     {
         $property = Property::findOrFail(Encryption::decrypt($encrypted_id));
-        $property->listing = ! $property->listing;
+        $property->is_active = ! $property->is_active;
         $property->save();
 
         return back();

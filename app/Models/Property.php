@@ -14,7 +14,7 @@ class Property extends Model
     protected $table = 'property';
 
     protected $fillable = [
-        'listing',
+        'is_active',
         'is_favorite',
         'description',
         'street',
@@ -46,9 +46,14 @@ class Property extends Model
         return $this->photos()->latest();
     }
 
-    public static function favorites(int $limit = 8)
+    public function scopeActive($query)
     {
-        return Property::where('is_favorite', true)->with(['main_photo'])->take($limit);
+        return $query->where('is_active', true);
+    }
+
+    public function scopeFavorites($query)
+    {
+        return $query->active()->where('is_favorite', true)->with(['main_photo'])->take(8);
     }
 
     public function encryptId(): void

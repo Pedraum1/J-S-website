@@ -20,7 +20,7 @@ class PropertyFactory extends Factory
     public function definition(): array
     {
         return [
-            'listing' => $this->faker->boolean(),
+            'is_active' => $this->faker->boolean(),
             'is_favorite' => $this->faker->boolean(),
             'description' => $this->faker->text(),
             'street' => $this->faker->randomElement(['R', 'Av']).'. '.$this->faker->streetName(),

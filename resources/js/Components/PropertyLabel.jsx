@@ -5,7 +5,7 @@ import { router } from "@inertiajs/react";
 export default function PropertyLabel({ property }) {
 
     const [favorite, setFavorite] = useState(property.is_favorite);
-    const [active, setActive] = useState(property.listing);
+    const [active, setActive] = useState(property.is_active);
 
     const deleteProperty = (id) => {
         router.delete(
