@@ -35,7 +35,7 @@ return new class extends Migration
         }
 
         Schema::table('property', function (Blueprint $table) {
-            $table->enum('new_property_type', ['Casa', 'Apartamento', 'Terreno', 'Ponto Cormercial', 'Sala'])->after('property_type');
+            $table->enum('new_property_type', ['Casa', 'Apartamento', 'Terreno', 'Ponto Comercial', 'Sala'])->after('property_type');
         });
 
         DB::statement('UPDATE property SET new_property_type = property_type');
