@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ActionButton from "./ActionButton";
-import { router } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 export default function PropertyLabel({ property }) {
 
@@ -54,9 +54,11 @@ export default function PropertyLabel({ property }) {
                     className="flex rounded-md shadow-xs overflow-hidden"
                     role="group"
                 >
+                    <Link href={route('dashboard.edit',property.encrypted_id)}>
                     <ActionButton>
                         <i className="fa-regular fa-pen-to-square"></i>
                     </ActionButton>
+                    </Link>
                     <ActionButton action={() => deleteProperty(property.encrypted_id)}>
                         <i className="fa-regular fa-trash-can"></i>
                     </ActionButton>

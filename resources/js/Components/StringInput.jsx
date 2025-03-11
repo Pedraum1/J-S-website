@@ -3,7 +3,8 @@ export default function StringInput({
     name,
     placeholder = "",
     type = "text",
-    onChange
+    onChange,
+    value
 }) {
     return (
         <>
@@ -18,6 +19,7 @@ export default function StringInput({
                     name={name}
                     placeholder={placeholder}
                     onChange={onChange}
+                    value={value}
                     className="w-full border-gray-200 shadow-lg rounded-lg focus:outline-0 focus:ring-0"
                 />
             </div>

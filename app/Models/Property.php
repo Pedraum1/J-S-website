@@ -64,6 +64,13 @@ class Property extends Model
         $this->makeHidden('id')->setAttribute('id', $encrypted_id);
     }
 
+    public function encryptAgentId(): void
+    {
+        $encrypted_id = Encryption::encrypt($this->agent_id);
+        $this->encrypted_agent_id = $encrypted_id;
+        $this->makeHidden('agent_id')->setAttribute('agent_id', $encrypted_id);
+    }
+
     public function agent(): BelongsTo
     {
         return $this->belongsTo(User::class,'agent_id','id');

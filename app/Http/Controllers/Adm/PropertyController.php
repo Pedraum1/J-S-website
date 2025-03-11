@@ -47,6 +47,7 @@ class PropertyController extends Controller
     public function store(PropertyStoreRequest $request)
     {
         $validated = $request->validated();
+        
         if(is_null($validated['neighborhood'])){
             Neighborhood::create(['name'=>$validated['new_neighborhood']]);
             $validated['neighborhood'] = $validated['new_neighborhood'];
@@ -73,17 +74,42 @@ class PropertyController extends Controller
     /**
      * Show the form for editing the specified property.
      */
-    public function edit(string $id)
+    public function edit(string $encrypted_id)
     {
-        //
+        $property = Property::with('agent')->find(Encryption::decrypt($encrypted_id));
+        $property->encryptId();
+        $property->encryptAgentId();
+ 
+        $property->agent_name = $property->agent->name;
+        $property->agent->encryptId();
+
+        $neighborhoods = Neighborhood::orderBy('name','asc')->get();
+        $agents = User::agents()->orderBy('name','asc')->get();
+        foreach($agents as $agent){
+            $agent->encryptId();
+        }
+
+        return Inertia::render('Dashboard/EditProperty',['property'=>$property,'neighborhoods'=>$neighborhoods,'agents'=>$agents]);
     }
 
     /**
      * Update the specified property in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PropertyStoreRequest $request, string $encrypted_id)
     {
-        //
+        $validated = $request->validated();
+        $property = Property::find(Encryption::decrypt($encrypted_id));
+        if(is_null($validated['neighborhood'])){
+            Neighborhood::create(['name'=>$validated['new_neighborhood']]);
+            $validated['neighborhood'] = $validated['new_neighborhood'];
+        }
+        unset($validated["new_neighborhood"]);
+        
+        $validated['agent_id'] = Encryption::decrypt($validated['agent_id']);
+        
+        $property->update($validated);
+
+        return redirect(route('dashboard'));
     }
 
     /**

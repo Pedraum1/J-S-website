@@ -21,7 +21,7 @@ class EncryptedAgentExists implements ValidationRule
         try {
             $decryptedId = Encryption::decrypt($value);
 
-            if(!User::agents()::find($decryptedId)->exists()){
+            if(!User::agents()->find($decryptedId)->exists()){
                 $fail('O :attribute selecionado é inválido.');
             }
         } catch (\Throwable $e) {

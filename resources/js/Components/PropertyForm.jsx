@@ -5,37 +5,40 @@ import StringInput from "./StringInput";
 import ErrorFlashMessage from "./ErrorFlashMessage";
 import Spinner from "./Spinner";
 
-export default function PropertyForm({ property = null, isEditing = false }) {
-    const { data, setData, post, errors, processing } = useForm({
-        is_active: true,
-        description: "",
-        street: "",
-        street_number: 0,
-        neighborhood: "",
-        new_neighborhood: "",
-        city: "",
-        area_size: "",
-        price: 0,
-        condo_fee: 0,
-        agent_id: "",
-        operation_type: "",
-        property_type: "",
-        bedrooms: 0,
-        master_bedrooms: 0,
-        bathrooms: 0,
-        rooms: 0,
-        kitchens: 0,
-        service_rooms: 0,
-        parking_spots: 0,
-    });
+export default function PropertyForm({ isEditing = false }) {
+    const property = usePage().props.property;
     const neighborhoods = usePage().props.neighborhoods;
     const agents = usePage().props.agents;
+
+    const { data, setData, post, patch, errors, processing } = useForm({
+        is_active       : property ? (property.is_active) : (true),
+        description     : property ? (property.description ?? "") : (""),
+        street          : property ? (property.street ?? "") : (""),
+        street_number   : property ? (property.street_number ?? 0) : (0),
+        neighborhood    : property ? (property.neighborhood ?? "") : (""),
+        new_neighborhood: "",
+        city            : property ? (property.city ?? "") : (""),
+        area_size       : property ? (property.area_size ?? "") : (""),
+        price           : property ? (property.price ?? 0) : (0),
+        condo_fee       : property ? (property.condo_fee ?? 0) : (0),
+        agent_id        : property ? (property.encrypted_agent_id ?? "") : (""),
+        operation_type  : property ? (property.operation_type ?? "") : (""),
+        property_type   : property ? (property.property_type ?? "") : (""),
+        bedrooms        : property ? (property.bedrooms ?? 0) : (0),
+        master_bedrooms : property ? (property.master_bedrooms ?? 0) : (0),
+        bathrooms       : property ? (property.bathrooms ?? 0) : (0),
+        rooms           : property ? (property.rooms ?? 0) : (0),
+        kitchens        : property ? (property.kitchens ?? 0) : (0),
+        service_rooms   : property ? (property.service_rooms ?? 0) : (0),
+        parking_spots   : property ? (property.parking_spots ?? 0) : (0),
+        agent_name      : property ? (property.agent_name ?? "") : (""),
+    });
 
     const submitForm = (e) => {
         e.preventDefault();
 
         if (isEditing) {
-            patch("/dashboard/update");
+            patch(route('dashboard.update', property.encrypted_id));
         } else {
             post("/dashboard/store");
         }
@@ -59,7 +62,9 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             id="description"
                             className="block rounded-xl shadow-xl border-neutral-200 focus:outline-none focus:ring-0 w-full h-40"
-                        ></textarea>
+                        >
+                            {data.description}
+                        </textarea>
                         <ErrorFlashMessage error={errors.description} />
                     </div>
 
@@ -71,21 +76,48 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                                     setData("property_type", e.target.value);
                                 }}
                             >
-                                <option>Tipo de imóvel</option>
-                                <option value="Casa">CASA</option>
-                                <option value="Apartamento">APARTAMENTO</option>
-                                <option value="Ponto Comercial">
-                                    PONTO COMERCIAL
+                                <option value="">Tipo de imóvel</option>
+                                <option
+                                    selected={data.property_type == "Casa"}
+                                    value="Casa"
+                                >
+                                    Casa
                                 </option>
-                                <option value="Sala">SALA</option>
-                                <option value="Terreno">TERRENO</option>
+                                <option
+                                    selected={
+                                        data.property_type == "Apartamento"
+                                    }
+                                    value="Apartamento"
+                                >
+                                    Apartamento
+                                </option>
+                                <option
+                                    selected={
+                                        data.property_type == "Ponto Comercial"
+                                    }
+                                    value="Ponto Comercial"
+                                >
+                                    Ponto comercial
+                                </option>
+                                <option
+                                    selected={data.property_type == "Sala"}
+                                    value="Sala"
+                                >
+                                    Sala
+                                </option>
+                                <option
+                                    selected={data.property_type == "Terreno"}
+                                    value="Terreno"
+                                >
+                                    Terreno
+                                </option>
                             </SelectInput>
                         </div>
                         <div className="flex items-center mt-4">
                             <input
                                 id="default-checkbox"
                                 type="checkbox"
-                                defaultChecked
+                                checked={data.is_active}
                                 value={data.is_active}
                                 onChange={(e) => {
                                     setData("is_active", e.target.checked);
@@ -225,10 +257,25 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                                 setData("operation_type", e.target.value);
                             }}
                         >
-                            <option>Tipo de operação</option>
-                            <option value="Aluguel">Aluguel</option>
-                            <option value="Venda">Venda</option>
-                            <option value="Temporada">Temporada</option>
+                            <option value="">Tipo de operação</option>
+                            <option
+                                selected={data.operation_type == "Aluguel"}
+                                value="Aluguel"
+                            >
+                                Aluguel
+                            </option>
+                            <option
+                                selected={data.operation_type == "Venda"}
+                                value="Venda"
+                            >
+                                Venda
+                            </option>
+                            <option
+                                selected={data.operation_type == "Temporada"}
+                                value="Temporada"
+                            >
+                                Temporada
+                            </option>
                         </SelectInput>
                         <ErrorFlashMessage error={errors.operation_type} />
                     </div>
@@ -239,11 +286,12 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                                 setData("agent_id", e.target.value);
                             }}
                         >
-                            <option>Corretor responsável</option>
+                            <option value="">Corretor responsável</option>
                             {agents.map((agent) => (
                                 <option
                                     key={agent.name}
                                     value={agent.encrypted_id}
+                                    selected={data.agent_name == agent.name}
                                 >
                                     {agent.name}
                                 </option>
@@ -287,11 +335,14 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             setData("neighborhood", e.target.value);
                         }}
                     >
-                        <option>Bairro</option>
+                        <option value="">Bairro</option>
                         {neighborhoods.map((neighborhood) => (
                             <option
                                 key={neighborhood.name}
                                 value={neighborhood.name}
+                                selected={
+                                    data.neighborhood == neighborhood.name
+                                }
                             >
                                 {neighborhood.name}
                             </option>
@@ -305,8 +356,13 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             setData("city", e.target.value);
                         }}
                     >
-                        <option>Cidade</option>
-                        <option value="Fortaleza">Fortaleza</option>
+                        <option value="">Cidade</option>
+                        <option
+                            selected={data.city == "Fortaleza"}
+                            value="Fortaleza"
+                        >
+                            Fortaleza
+                        </option>
                     </SelectInput>
                     <ErrorFlashMessage error={errors.city} />
                 </section>
@@ -314,9 +370,9 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                 <section className="col-span-1 md:col-start-2 mt-8">
                     <ActionButton type={"submit"}>
                         {processing ? (
-                            <Spinner/>
+                            <Spinner />
                         ) : (
-                            isEditing ? "Atualizar" : "Adicionar " + " imóvel"
+                            (isEditing ? "Atualizar" : "Adicionar ") + " imóvel"
                         )}
                     </ActionButton>
                 </section>
