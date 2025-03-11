@@ -1,11 +1,26 @@
+import ActionButton from "@/Components/ActionButton";
 import Outdoor from "@/Components/Outdoor";
 import PropertyCard from "@/Components/PropertyCard";
 import SelectInput from "@/Components/SelectInput";
 import StringInput from "@/Components/StringInput";
 import MainLayout from "@/Layouts/MainLayout";
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 
 export default function Homepage({ properties, neighborhoods }) {
+    const { data, setData, get, errors, processing } = useForm({
+        property_type: "",
+        operation_type: "",
+        max_value: 0,
+        neighborhood: "",
+    });
+
+    const submitFilter = (e) => {
+        e.preventDefault();
+        console.log(data);
+
+        get(route('property.filter'));
+    };
+
     return (
         <>
             <Head title="Página Inicial" />
@@ -13,49 +28,79 @@ export default function Homepage({ properties, neighborhoods }) {
                 <Outdoor />
 
                 <article className="pb-4">
-                    <form action="">
+                    <form onSubmit={submitFilter}>
                         <h3 className="w-2/3 mx-auto mt-4 text-3xl text-center font-light">
                             Encontre seu imóvel ideal
                         </h3>
                         <section className="lg:w-1/2 w-[90%] mx-auto my-4 grid lg:grid-cols-5 grid-cols-2 lg:grid-rows-1 grid-rows-3 gap-4 items-end">
                             <div className="col-span-1">
-                                <SelectInput title="Tipo de Imóvel">
-                                    <option value=""></option>
-                                    <option value="">Apartamento</option>
-                                    <option value="">Casa</option>
-                                    <option value="">Ponto comercial</option>
-                                    <option value="">Sala</option>
-                                    <option value="">Terreno</option>
+                                <SelectInput
+                                    title="Tipo de Imóvel"
+                                    value={data.property_type}
+                                    onChange={(e) => {
+                                        setData(
+                                            "property_type",
+                                            e.target.value
+                                        );
+                                    }}
+                                >
+                                    <option></option>
+                                    <option value="Apartamento">
+                                        Apartamento
+                                    </option>
+                                    <option value="Casa">Casa</option>
+                                    <option value="Ponto comercial">
+                                        Ponto comercial
+                                    </option>
+                                    <option value="Sala">Sala</option>
+                                    <option value="Terreno">Terreno</option>
                                 </SelectInput>
                             </div>
                             <div className="col-span-1">
-                                <SelectInput title="Operação">
-                                    <option value=""></option>
-                                    <option value="">Aluguel</option>
-                                    <option value="">Temporada</option>
-                                    <option value="">Venda</option>
+                                <SelectInput
+                                    title="Operação"
+                                    value={data.operation_type}
+                                    onChange={(e) => {
+                                        setData(
+                                            "operation_type",
+                                            e.target.value
+                                        );
+                                    }}
+                                >
+                                    <option></option>
+                                    <option value="Aluguel">Aluguel</option>
+                                    <option value="Temporada">Temporada</option>
+                                    <option value="Venda">Venda</option>
                                 </SelectInput>
                             </div>
                             <div className="col-span-1">
                                 <StringInput
                                     title="Valor máximo"
                                     placeholder="R$ 1.000,00"
+                                    type="number"
+                                    value={data.max_value}
+                                    onChange={(e) => {
+                                        setData(
+                                            "max_value",
+                                            e.target.value
+                                        );
+                                    }}
                                 />
                             </div>
                             <div className="col-span-1">
                                 <SelectInput title="Bairro">
-                                    <option value=""></option>
+                                    <option></option>
                                     {neighborhoods.map((neighborhood) => (
-                                        <option value="" key={neighborhood.id}>
+                                        <option value={neighborhood.name} key={neighborhood.id}>
                                             {neighborhood.name}
                                         </option>
                                     ))}
                                 </SelectInput>
                             </div>
                             <div className="lg:col-span-1 col-span-2 text-center">
-                                <button className="lg:w-full md:w-1/2 w-full py-[0.6rem] bg-red-800 text-red-50 rounded-lg hover:-translate-y-1 active:translate-y-0 active:bg-red-700 transition-all duration-200 ease-out">
+                                <ActionButton type="submit">
                                     Pesquisar
-                                </button>
+                                </ActionButton>
                             </div>
                         </section>
                     </form>

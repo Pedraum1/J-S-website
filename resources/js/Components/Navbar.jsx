@@ -16,14 +16,14 @@ export default function Navbar() {
                     <ul className="flex flex-row justify-center lg:gap-x-12 gap-x-4 text-lg items-center">
                         <NavbarLink title="O que é a J&S?" link="/sobre" />
                         <NavbarLink title="Nossos Serviços" link="/servicos" />
-                        <NavbarLink title="Imóveis" link="/imovel/pesquisar" />
+                        <NavbarLink title="Imóveis" link={route('property.list')} />
                         <NavbarLink title="Contato" link="/contato" />
                     </ul>
                     <ul>
                         {auth.user ? (
-                            <NavbarLink title="Dashboard" link="/dashboard" />
+                            <NavbarLink title="Dashboard" link={route('dashboard')} />
                         ) : (
-                            <NavbarLink title="Login" link="/login" />
+                            <NavbarLink title="Login" link={route('login')} />
                         )}
                     </ul>
                 </section>

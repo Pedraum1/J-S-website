@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyStoreRequest;
 use App\Models\Property;
 use App\Services\Encryption;
 use Illuminate\Http\Request;
@@ -35,9 +36,21 @@ class PropertyController extends Controller
     /**
      * Store a newly created property in storage.
      */
-    public function store(Request $request)
+    public function store(PropertyStoreRequest $request)
     {
-        return dd($request);
+        $validated = $request->validated();
+        
+        if(is_null($validated['neighborhood'])){
+            // Create new neighborhood
+            $validated['neighborhood'] = $validated['new_neighborhood'];
+        }
+        unset($validated["new_neighborhood"]);
+        $validated += ["is_favorite"=>false];
+        
+        $property = Property::create($validated);
+
+        return redirect(route('dashboard'));
+        
     }
 
     /**

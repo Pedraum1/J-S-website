@@ -2,14 +2,16 @@ import { useForm } from "@inertiajs/react";
 import ActionButton from "./ActionButton";
 import SelectInput from "./SelectInput";
 import StringInput from "./StringInput";
+import ErrorFlashMessage from "./ErrorFlashMessage";
 
 export default function PropertyForm({ property = null, isEditing = false }) {
     const { data, setData, post, errors, processing } = useForm({
-        is_active: "",
+        is_active: true,
         description: "",
         street: "",
         street_number: 0,
         neighborhood: "",
+        new_neighborhood: "",
         city: "",
         area_size: "",
         price: 0,
@@ -28,11 +30,11 @@ export default function PropertyForm({ property = null, isEditing = false }) {
 
     const submitForm = (e) => {
         e.preventDefault();
-        
-        if(isEditing){
-            patch('/dashboard/update',)
+
+        if (isEditing) {
+            patch("/dashboard/update");
         } else {
-            post('/dashboard/store',);
+            post("/dashboard/store");
         }
     };
     return (
@@ -45,14 +47,18 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                     <label htmlFor="description" className="text-lg">
                         Descrição do Imóvel
                     </label>
-                    <textarea
-                        value={data.description}
-                        onChange={(e) => {
-                            setData("description", e.target.value);
-                        }}
-                        id="description"
-                        className="block rounded-xl shadow-xl border-neutral-200 focus:outline-none focus:ring-0 w-full h-40 mb-4"
-                    ></textarea>
+                    <div className="mb-4">
+                        <textarea
+                            value={data.description}
+                            onChange={(e) => {
+                                setData("description", e.target.value);
+                            }}
+                            id="description"
+                            className="block rounded-xl shadow-xl border-neutral-200 focus:outline-none focus:ring-0 w-full h-40"
+                        ></textarea>
+                        <ErrorFlashMessage error={errors.description} />
+                    </div>
+
                     <div className="flex items-start justify-between">
                         <div>
                             <SelectInput
@@ -62,13 +68,13 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                                 }}
                             >
                                 <option>Tipo de imóvel</option>
-                                <option value="CASA">CASA</option>
-                                <option value="APARTAMENTO">APARTAMENTO</option>
-                                <option value="PONTO COMERCIAL">
+                                <option value="Casa">CASA</option>
+                                <option value="Apartamento">APARTAMENTO</option>
+                                <option value="Ponto Comercial">
                                     PONTO COMERCIAL
                                 </option>
-                                <option value="SALA">SALA</option>
-                                <option value="TERRENO">TERRENO</option>
+                                <option value="Sala">SALA</option>
+                                <option value="Terreno">TERRENO</option>
                             </SelectInput>
                         </div>
                         <div className="flex items-center mt-4">
@@ -78,7 +84,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                                 defaultChecked
                                 value={data.is_active}
                                 onChange={(e) => {
-                                    setData("is_active", e.target.value);
+                                    setData("is_active", e.target.checked);
                                 }}
                                 className="w-4 h-4 rounded-sm"
                             />
@@ -90,6 +96,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             </label>
                         </div>
                     </div>
+                    <ErrorFlashMessage error={errors.property_type} />
                 </section>
 
                 <section className="col-span-1 row-span-1 grid grid-rows-4 grid-cols-2 gap-x-2 gap-y-2">
@@ -102,6 +109,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.bedrooms} />
                     </div>
                     <div className="col-span-1 row-span-1">
                         <StringInput
@@ -112,6 +120,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.master_bedrooms} />
                     </div>
                     <div className="col-span-1 row-span-1">
                         <StringInput
@@ -122,6 +131,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.rooms} />
                     </div>
                     <div className="col-span-1 row-span-1">
                         <StringInput
@@ -132,6 +142,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.bathrooms} />
                     </div>
                     <div className="col-span-1 row-span-1">
                         <StringInput
@@ -142,6 +153,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.service_rooms} />
                     </div>
                     <div className="col-span-1 row-span-1">
                         <StringInput
@@ -152,6 +164,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.kitchens} />
                     </div>
                     <div className="col-span-1 row-span-1">
                         <StringInput
@@ -162,6 +175,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.parking_spots} />
                     </div>
                     <div className="col-span-1 row-span-1">
                         <StringInput
@@ -172,6 +186,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                             type="number"
                         />
+                        <ErrorFlashMessage error={errors.area_size} />
                     </div>
                 </section>
                 <section className="grid grid-cols-2 grid-flow-row md:gap-y-4 gap-y-8 gap-x-4 h-fit">
@@ -185,6 +200,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                                 setData("price", e.target.value);
                             }}
                         />
+                        <ErrorFlashMessage error={errors.price} />
                     </div>
                     <div className="lg:col-span-1 col-span-2 row-span-1">
                         <StringInput
@@ -196,6 +212,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                                 setData("condo_fee", e.target.value);
                             }}
                         />
+                        <ErrorFlashMessage error={errors.condo_fee} />
                     </div>
                     <div className="lg:col-span-1 col-span-2 row-span-1">
                         <SelectInput
@@ -205,10 +222,11 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                         >
                             <option>Tipo de operação</option>
-                            <option value="ALUGUEL">Aluguel</option>
-                            <option value="VENDA">Venda</option>
-                            <option value="TEMPORADA">Temporada</option>
+                            <option value="Aluguel">Aluguel</option>
+                            <option value="Venda">Venda</option>
+                            <option value="Temporada">Temporada</option>
                         </SelectInput>
+                        <ErrorFlashMessage error={errors.operation_type} />
                     </div>
                     <div className="xl:col-span-1 col-span-2 row-span-1">
                         <SelectInput
@@ -221,6 +239,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             <option value="JP">João</option>
                             <option value="SQ">Suzi</option>
                         </SelectInput>
+                        <ErrorFlashMessage error={errors.agent_id} />
                     </div>
                 </section>
 
@@ -233,6 +252,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                         }}
                         placeholder='Não inserir iniciais "R." ou "Av." nem ponto final ou vírgula, já serão adicionados automaticamente'
                     />
+                    <ErrorFlashMessage error={errors.street} />
                     <StringInput
                         title="Número"
                         type="number"
@@ -241,6 +261,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             setData("street_number", e.target.value);
                         }}
                     />
+                    <ErrorFlashMessage error={errors.street_number} />
                     <StringInput
                         title="Novo bairro"
                         value={data.new_neighborhood}
@@ -248,17 +269,8 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             setData("new_neighborhood", e.target.value);
                         }}
                     />
-                    <SelectInput
-                        value="city"
-                        onChange={(e) => {
-                            setData("city", e.target.value);
-                        }}
-                    >
-                        <option>Cidade</option>
-                        <option value="cidade1">Cidade 1</option>
-                        <option value="cidade2">Cidade 2</option>
-                        {/* Insert cities list */}
-                    </SelectInput>
+                    <ErrorFlashMessage error={errors.new_neighborhood} />
+
                     <SelectInput
                         value="neighborhood"
                         onChange={(e) => {
@@ -270,12 +282,27 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                         <option value="bairro2">Bairro 2</option>
                         {/* Insert neighborhoods list */}
                     </SelectInput>
+                    <ErrorFlashMessage error={errors.neighborhood} />
+
+                    <SelectInput
+                        value="city"
+                        onChange={(e) => {
+                            setData("city", e.target.value);
+                        }}
+                    >
+                        <option>Cidade</option>
+                        <option value="cidade1">Cidade 1</option>
+                        <option value="cidade2">Cidade 2</option>
+                        {/* Insert cities list */}
+                    </SelectInput>
+                    <ErrorFlashMessage error={errors.city} />
                 </section>
-                <div className="col-span-1 md:col-start-2 mt-8">
+
+                <section className="col-span-1 md:col-start-2 mt-8">
                     <ActionButton type={"submit"}>
                         {isEditing ? "Atualizar" : "Adicionar"} imóvel
                     </ActionButton>
-                </div>
+                </section>
             </form>
         </>
     );
