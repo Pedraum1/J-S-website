@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Adm;
 
+use App\Actions\CreateNeighborhoodOrFail;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropertyStoreRequest;
 use App\Models\Neighborhood;
@@ -97,12 +98,9 @@ class PropertyController extends Controller
     public function update(PropertyStoreRequest $request, string $encrypted_id)
     {
         $validated = $request->validated();
+        
         $property = Property::find(Encryption::decrypt($encrypted_id));
-        if (is_null($validated['neighborhood'])) {
-            Neighborhood::create(['name' => $validated['new_neighborhood']]);
-            $validated['neighborhood'] = $validated['new_neighborhood'];
-        }
-        unset($validated['new_neighborhood']);
+        $validated = CreateNeighborhoodOrFail::handle($validated);
 
         $validated['agent_id'] = Encryption::decrypt($validated['agent_id']);
 
