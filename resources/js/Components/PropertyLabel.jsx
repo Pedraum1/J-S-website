@@ -40,7 +40,7 @@ export default function PropertyLabel({ property }) {
         >
             <th
                 scope="row"
-                className={"px-6 py-4 font-medium whitespace-nowrap"}
+                className="px-6 py-4 font-medium whitespace-nowrap uppercase"
             >
                 {property.property_type}
             </th>

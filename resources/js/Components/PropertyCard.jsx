@@ -6,18 +6,19 @@ export default function PorpertyCard({ property_data }) {
             <Link href={"/imovel/" + property_data.encrypted_id}>
                 {property_data.main_photo.length > 0 ? (
                     <img
-                    src={"/storage/" + property_data.photos[0].name}
-                    className="object-cover h-64"
-                />
+                        src={"/storage/" + property_data.photos[0].name}
+                        className="object-cover h-64"
+                    />
                 ) : (
                     <img
-                    src={"/assets/no_image.png"}
-                    className="object-cover h-64"
-                />
+                        src={"/assets/no_image.png"}
+                        className="object-cover h-64"
+                    />
                 )}
                 <div className="p-2">
                     <h3 className="text-xl">
-                        {property_data.street}, {property_data.street_number} -{" "}
+                        {property_data.property_type} | {property_data.street},{" "}
+                        {property_data.street_number} -{" "}
                         {property_data.neighborhood}
                     </h3>
                     <div className="flex flex-row items-center justify-between">
@@ -27,7 +28,7 @@ export default function PorpertyCard({ property_data }) {
                             </h2>
                         </div>
                         <div>
-                            <p className="bg-red-800 p-1 rounded-lg text-red-50 text-sm">
+                            <p className="bg-red-800 p-1 rounded-lg text-red-50 text-sm uppercase">
                                 {property_data.operation_type}
                             </p>
                         </div>
