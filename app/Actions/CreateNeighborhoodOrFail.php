@@ -15,7 +15,7 @@ class CreateNeighborhoodOrFail
             Neighborhood::create(['name' => $validation_array['new_neighborhood']]);
             $validated['neighborhood'] = $validation_array['new_neighborhood'];
         }
-        unset($validated['new_neighborhood']);
-        return $validated;
+        unset($validation_array['new_neighborhood']);
+        return $validation_array;
     }
 }
