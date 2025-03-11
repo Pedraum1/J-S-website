@@ -11,10 +11,10 @@ Route::controller(GuestPagesController::class)->group(function () {
 });
 
 Route::controller(PropertyPagesController::class)->prefix('/imovel')->group(function () {
-    Route::get('/pesquisar', 'list');
-    Route::get('/pesquisar/{text}', 'search_property_by_name');
-    Route::get('/pesquisar/{type?}/{operation?}/{neighborhood?}/{max_value?}', 'search_property_by_fiters');
-    Route::get('/{encrypted_id}', 'property_description');
+    Route::get('/pesquisar', 'list')->name('property.list');
+    Route::get('/pesquisar/{text}', 'search_property_by_name')->name('property.search');
+    Route::get('/pesquisar/{type?}/{operation?}/{neighborhood?}/{max_value?}', 'search_property_by_fiters')->name('property.filter');
+    Route::get('/{encrypted_id}', 'property_description')->name('property.description');
 });
 
 Route::middleware('auth')->group(function () {
@@ -25,6 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::controller(PropertyController::class)->prefix('/dashboard')->group(function () {
         Route::get('/', 'index')->name('dashboard');
         Route::get('/adicionar-imovel', 'create');
+        Route::post('/store','store');
+
+        Route::get('/atualizar-imovel','edit');
+        Route::patch('/update','update');
 
         Route::put('/{encrypted_id}/toggle', 'toggle');
         Route::put('/{encrypted_id}/favorite', 'favorite');
