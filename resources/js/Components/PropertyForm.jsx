@@ -1,8 +1,9 @@
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import ActionButton from "./ActionButton";
 import SelectInput from "./SelectInput";
 import StringInput from "./StringInput";
 import ErrorFlashMessage from "./ErrorFlashMessage";
+import Spinner from "./Spinner";
 
 export default function PropertyForm({ property = null, isEditing = false }) {
     const { data, setData, post, errors, processing } = useForm({
@@ -27,6 +28,8 @@ export default function PropertyForm({ property = null, isEditing = false }) {
         service_rooms: 0,
         parking_spots: 0,
     });
+    const neighborhoods = usePage().props.neighborhoods;
+    const agents = usePage().props.agents;
 
     const submitForm = (e) => {
         e.preventDefault();
@@ -37,6 +40,7 @@ export default function PropertyForm({ property = null, isEditing = false }) {
             post("/dashboard/store");
         }
     };
+
     return (
         <>
             <form
@@ -236,8 +240,14 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                             }}
                         >
                             <option>Corretor responsável</option>
-                            <option value="JP">João</option>
-                            <option value="SQ">Suzi</option>
+                            {agents.map((agent) => (
+                                <option
+                                    key={agent.name}
+                                    value={agent.encrypted_id}
+                                >
+                                    {agent.name}
+                                </option>
+                            ))}
                         </SelectInput>
                         <ErrorFlashMessage error={errors.agent_id} />
                     </div>
@@ -278,9 +288,14 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                         }}
                     >
                         <option>Bairro</option>
-                        <option value="bairro1">Bairro 1</option>
-                        <option value="bairro2">Bairro 2</option>
-                        {/* Insert neighborhoods list */}
+                        {neighborhoods.map((neighborhood) => (
+                            <option
+                                key={neighborhood.name}
+                                value={neighborhood.name}
+                            >
+                                {neighborhood.name}
+                            </option>
+                        ))}
                     </SelectInput>
                     <ErrorFlashMessage error={errors.neighborhood} />
 
@@ -291,16 +306,18 @@ export default function PropertyForm({ property = null, isEditing = false }) {
                         }}
                     >
                         <option>Cidade</option>
-                        <option value="cidade1">Cidade 1</option>
-                        <option value="cidade2">Cidade 2</option>
-                        {/* Insert cities list */}
+                        <option value="Fortaleza">Fortaleza</option>
                     </SelectInput>
                     <ErrorFlashMessage error={errors.city} />
                 </section>
 
                 <section className="col-span-1 md:col-start-2 mt-8">
                     <ActionButton type={"submit"}>
-                        {isEditing ? "Atualizar" : "Adicionar"} imóvel
+                        {processing ? (
+                            <Spinner/>
+                        ) : (
+                            isEditing ? "Atualizar" : "Adicionar " + " imóvel"
+                        )}
                     </ActionButton>
                 </section>
             </form>

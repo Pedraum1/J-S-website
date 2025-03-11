@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\EncryptedAgentExists;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -33,7 +34,7 @@ class PropertyStoreRequest extends FormRequest
             'area_size'        => 'required|integer|min:1',
             'price'            => 'required|integer|min:1',
             'condo_fee'        => 'nullable|integer|min:0',
-            'agent_id'         => 'required|string|max:50',
+            'agent_id'         => ['required','string','max:255'/*,new EncryptedAgentExists*/],
             'operation_type'   => [
                 'required',
                 Rule::in(['Aluguel', 'Venda', 'Temporada']),

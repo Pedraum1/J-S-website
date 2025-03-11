@@ -3,6 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Services\Encryption;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -47,5 +50,20 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public static function agents(){
+        return User::where('occupation','corretor');
+    }
+
+    public function encryptId(): void
+    {
+        $encrypted_id = Encryption::encrypt($this->id);
+        $this->encrypted_id = $encrypted_id;
+        $this->makeHidden('id')->setAttribute('id', $encrypted_id);
+    }
+
+    public function properties(): HasMany {
+        return $this->hasMany(Property::class, 'agent_id', 'id');
     }
 }

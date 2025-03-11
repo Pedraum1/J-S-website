@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PropertyStoreRequest;
+use App\Models\Neighborhood;
 use App\Models\Property;
+use App\Models\User;
 use App\Services\Encryption;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,7 +32,13 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Dashboard/AddProperty');
+        $neighborhoods = Neighborhood::orderBy('name','asc')->get();
+        $agents = User::agents()->orderBy('name','asc')->get();
+        foreach($agents as $agent){
+            $agent->encryptId();
+        }
+
+        return Inertia::render('Dashboard/AddProperty',['neighborhoods'=>$neighborhoods,'agents'=>$agents]);
     }
 
     /**
@@ -39,15 +47,16 @@ class PropertyController extends Controller
     public function store(PropertyStoreRequest $request)
     {
         $validated = $request->validated();
-        
         if(is_null($validated['neighborhood'])){
-            // Create new neighborhood
+            Neighborhood::create(['name'=>$validated['new_neighborhood']]);
             $validated['neighborhood'] = $validated['new_neighborhood'];
         }
         unset($validated["new_neighborhood"]);
         $validated += ["is_favorite"=>false];
+
+        $validated['agent_id'] = Encryption::decrypt($validated['agent_id']);
         
-        $property = Property::create($validated);
+        Property::create($validated);
 
         return redirect(route('dashboard'));
         

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Services\Encryption;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Property extends Model
@@ -61,5 +62,10 @@ class Property extends Model
         $encrypted_id = Encryption::encrypt($this->id);
         $this->encrypted_id = $encrypted_id;
         $this->makeHidden('id')->setAttribute('id', $encrypted_id);
+    }
+
+    public function agent(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'agent_id','id');
     }
 }
