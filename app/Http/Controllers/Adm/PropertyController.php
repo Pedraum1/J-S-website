@@ -33,10 +33,11 @@ class PropertyController extends Controller
     public function create()
     {
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
-        $agents = User::agents()->orderBy('name', 'asc')->get();
-        foreach ($agents as $agent) {
+        $agents = User::agents()->orderBy('name', 'asc')->get()->map(function ($agent) {
             $agent->encryptId();
-        }
+
+            return $agent;
+        });
 
         return Inertia::render('Dashboard/AddProperty', ['neighborhoods' => $neighborhoods, 'agents' => $agents]);
     }
@@ -78,7 +79,7 @@ class PropertyController extends Controller
     {
         $property = Property::with('agent')->find(Encryption::decrypt($encrypted_id));
         $property->encryptId();
-        $property->encryptAgentId();
+        $property->agent->encryptId();
 
         $property->agent_name = $property->agent->name;
         $property->agent->encryptId();
@@ -86,6 +87,9 @@ class PropertyController extends Controller
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
         $agents = User::agents()->orderBy('name', 'asc')->get();
         foreach ($agents as $agent) {
+            $agent->encryptId();
+        }
+        foreach ($neighborhoods as $neighborhood) {
             $agent->encryptId();
         }
 
@@ -98,7 +102,7 @@ class PropertyController extends Controller
     public function update(PropertyStoreRequest $request, string $encrypted_id)
     {
         $validated = $request->validated();
-        
+
         $property = Property::find(Encryption::decrypt($encrypted_id));
         $validated = CreateNeighborhoodOrFail::handle($validated);
 

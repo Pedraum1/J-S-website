@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Pages;
 
+use App\Actions\FilterProperties;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PropertyFilterRequest;
 use App\Models\Neighborhood;
 use App\Models\Property;
 use App\Services\Encryption;
@@ -17,6 +19,10 @@ class PropertyPagesController extends Controller
 
         foreach ($properties as $property) {
             $property->encryptId();
+        }
+
+        foreach ($neighborhoods as $neighborhood) {
+            $neighborhood->encryptId();
         }
 
         return Inertia::render('Property/PropertyList',

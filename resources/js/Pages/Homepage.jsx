@@ -10,13 +10,12 @@ export default function Homepage({ properties, neighborhoods }) {
     const { data, setData, get, errors, processing } = useForm({
         property_type: "",
         operation_type: "",
-        max_value: 0,
-        neighborhood: "",
+        max_value: "",
+        neighborhood_id: "",
     });
 
     const submitFilter = (e) => {
         e.preventDefault();
-
         get(route('property.filter'));
     };
 
@@ -43,7 +42,7 @@ export default function Homepage({ properties, neighborhoods }) {
                                         );
                                     }}
                                 >
-                                    <option></option>
+                                    <option value=""></option>
                                     <option value="Apartamento">
                                         Apartamento
                                     </option>
@@ -66,7 +65,7 @@ export default function Homepage({ properties, neighborhoods }) {
                                         );
                                     }}
                                 >
-                                    <option></option>
+                                    <option value=""></option>
                                     <option value="Aluguel">Aluguel</option>
                                     <option value="Temporada">Temporada</option>
                                     <option value="Venda">Venda</option>
@@ -79,18 +78,23 @@ export default function Homepage({ properties, neighborhoods }) {
                                     type="number"
                                     value={data.max_value}
                                     onChange={(e) => {
-                                        setData(
-                                            "max_value",
-                                            e.target.value
-                                        );
+                                        setData("max_value", e.target.value);
                                     }}
                                 />
                             </div>
                             <div className="col-span-1">
-                                <SelectInput title="Bairro">
-                                    <option></option>
+                                <SelectInput
+                                    title="Bairro"
+                                    onChange={(e) => {
+                                        setData("neighborhood_id", e.target.value);
+                                    }}
+                                >
+                                    <option value=""></option>
                                     {neighborhoods.map((neighborhood) => (
-                                        <option value={neighborhood.name} key={neighborhood.id}>
+                                        <option
+                                            value={neighborhood.encrypted_id}
+                                            key={neighborhood.encrypted_id}
+                                        >
                                             {neighborhood.name}
                                         </option>
                                     ))}

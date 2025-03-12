@@ -11,7 +11,12 @@ class GuestPagesController extends Controller
 {
     public function home()
     {
-        $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
+        $neighborhoods = Neighborhood::orderBy('name', 'asc')->get()->map(function ($neighborhood) {
+            $neighborhood->encryptId();
+            $neighborhood = $neighborhood->toArray();
+
+            return $neighborhood;
+        });
 
         $properties = Property::favorites()->latest()->get()->map(function ($property) {
             $property->encryptId();

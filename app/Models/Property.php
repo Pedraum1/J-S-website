@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Services\Encryption;
+use App\Traits\HasEncryptedId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Property extends Model
 {
-    use HasFactory;
+    use HasEncryptedId, HasFactory;
 
     protected $table = 'property';
 
@@ -55,20 +55,6 @@ class Property extends Model
     public function scopeFavorites($query)
     {
         return $query->active()->where('is_favorite', true)->with(['main_photo'])->take(8);
-    }
-
-    public function encryptId(): void
-    {
-        $encrypted_id = Encryption::encrypt($this->id);
-        $this->encrypted_id = $encrypted_id;
-        $this->makeHidden('id')->setAttribute('id', $encrypted_id);
-    }
-
-    public function encryptAgentId(): void
-    {
-        $encrypted_id = Encryption::encrypt($this->agent_id);
-        $this->encrypted_agent_id = $encrypted_id;
-        $this->makeHidden('agent_id')->setAttribute('agent_id', $encrypted_id);
     }
 
     public function agent(): BelongsTo
