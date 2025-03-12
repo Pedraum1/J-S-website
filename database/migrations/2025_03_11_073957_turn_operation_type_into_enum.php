@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Property;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ return new class extends Migration
 
         Log::info('Unique values in operation_type table: ', $unique_values);
 
-        $correct_values = ['Aluguel', 'Venda', 'Temporada'];
+        $correct_values = Property::operation_types();
         $wrong_values = array_diff($unique_values, $correct_values);
 
         if (count($wrong_values) > 0) {
@@ -35,7 +36,7 @@ return new class extends Migration
         }
 
         Schema::table('property', function (Blueprint $table) {
-            $table->enum('new_operation_type', ['Aluguel', 'Venda', 'Temporada'])->after('operation_type');
+            $table->enum('new_operation_type', Property::operation_types())->after('operation_type');
         });
 
         DB::statement('UPDATE property SET new_operation_type = operation_type');

@@ -32,7 +32,7 @@ return new class extends Migration
             DB::table('neighborhoods')->insert(
                 [
                     'name' => $neighborhood,
-                    'created_at'=>Carbon::now()
+                    'created_at' => Carbon::now(),
                 ]
             );
         }
