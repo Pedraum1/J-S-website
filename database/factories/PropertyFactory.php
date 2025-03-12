@@ -22,8 +22,8 @@ class PropertyFactory extends Factory
     {
         $neighborhoods = Neighborhood::get()->toArray();
         $neighborhoods_array = [];
-        foreach($neighborhoods as $neighborhood){
-            array_push($neighborhoods_array,$neighborhood["name"]);
+        foreach ($neighborhoods as $neighborhood) {
+            array_push($neighborhoods_array, $neighborhood['name']);
         }
 
         return [
@@ -33,7 +33,7 @@ class PropertyFactory extends Factory
             'street' => $this->faker->randomElement(['R', 'Av']).'. '.$this->faker->streetName(),
             'street_number' => $this->faker->randomNumber(4),
             'neighborhood' => $this->faker->randomElement($neighborhoods_array),
-            'city' => "Fortaleza",
+            'city' => 'Fortaleza',
             'area_size' => $this->faker->randomNumber(3),
             'price' => $this->faker->randomNumber(4),
             'condo_fee' => $this->faker->randomNumber(3),

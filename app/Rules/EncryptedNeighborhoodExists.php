@@ -2,12 +2,12 @@
 
 namespace App\Rules;
 
-use App\Models\User;
+use App\Models\Neighborhood;
 use App\Services\Encryption;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class EncryptedAgentExists implements ValidationRule
+class EncryptedNeighborhoodExists implements ValidationRule
 {
     /**
      * Run the validation rule.
@@ -17,7 +17,7 @@ class EncryptedAgentExists implements ValidationRule
         try {
             $decryptedId = Encryption::decrypt($value);
 
-            if (! User::agents()->find($decryptedId)->exists()) {
+            if (! Neighborhood::find($decryptedId)->exists()) {
                 $fail('O :attribute selecionado é inválido.');
             }
         } catch (\Throwable $e) {

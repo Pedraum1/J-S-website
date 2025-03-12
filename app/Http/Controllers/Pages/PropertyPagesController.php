@@ -34,7 +34,29 @@ class PropertyPagesController extends Controller
 
     public function search_property_by_name(string $search_text) {}
 
-    public function search_property_by_fiters(?string $type, ?string $operation, ?string $neighborhood, ?int $max_value) {}
+    public function search_property_by_fiters(PropertyFilterRequest $request, FilterProperties $filter)
+    {
+        $validated = $request->validated();
+        $properties = $filter->handle($validated);
+
+        return dd($properties);
+
+        $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
+        foreach ($properties as $property) {
+            $property->encryptId();
+        }
+
+        foreach ($neighborhoods as $neighborhood) {
+            $neighborhood->encryptId();
+        }
+
+        return Inertia::render('Property/PropertyList',
+            [
+                'properties' => $properties,
+                'neighborhoods' => $neighborhoods,
+            ]);
+
+    }
 
     public function property_description(string $encrypted_id)
     {

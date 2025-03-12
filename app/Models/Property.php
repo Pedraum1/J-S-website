@@ -37,6 +37,16 @@ class Property extends Model
         'parking_spots',
     ];
 
+    public static function property_types(): array
+    {
+        return ['Casa', 'Apartamento', 'Terreno', 'Ponto Comercial', 'Sala'];
+    }
+
+    public static function operation_types(): array
+    {
+        return ['Aluguel', 'Venda', 'Temporada'];
+    }
+
     public function photos(): HasMany
     {
         return $this->hasMany(Image::class, 'original_id', 'id');
