@@ -19,7 +19,6 @@ export default function PropertyPage() {
 
     return (
         <>
-        {/* TODO:Insert property's address on page tittle */}
             <Head title={`${property.street}, ${property.street_number} - ${property.neighborhood}/${property.city}`} />
             <MainLayout>
                 <article className="h-96 xl:h-80 2xl:h-[700px]">

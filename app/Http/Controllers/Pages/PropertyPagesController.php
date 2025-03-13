@@ -39,21 +39,33 @@ class PropertyPagesController extends Controller
         $validated = $request->validated();
         $properties = $filter->handle($validated);
 
-        return dd($properties);
-
         $neighborhoods = Neighborhood::orderBy('name', 'asc')->get();
         foreach ($properties as $property) {
             $property->encryptId();
+            $property->encryptId('agent_id');
         }
 
         foreach ($neighborhoods as $neighborhood) {
             $neighborhood->encryptId();
         }
 
+        if (! empty($validated['neighborhood_id'])) {
+            $searched_neighborhood = Neighborhood::findByEncryptedIdOrFail($validated['neighborhood_id']);
+        }
+
+        $applied_filters = [
+            'max_value' => $validated['max_value'] ?? null,
+            'property_type' => $validated['property_type'] ?? null,
+            'operation_type' => $validated['operation_type'] ?? null,
+            'neighborhood_id' => $validated['neighborhood_id'] ?? null,
+            'neighborhood_name' => $searched_neighborhood->name ?? null,
+        ];
+
         return Inertia::render('Property/PropertyList',
             [
                 'properties' => $properties,
                 'neighborhoods' => $neighborhoods,
+                'applied_filters' => $applied_filters,
             ]);
 
     }

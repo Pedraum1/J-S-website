@@ -14,19 +14,20 @@ class FilterProperties
     {
         $properties = Property::query()->active();
 
-        if (! is_null($filters['property_type'])) {
+        if (! empty($filters['property_type'])) {
             $properties->where('property_type', $filters['property_type']);
         }
 
-        if (! is_null($filters['operation_type'])) {
+        if (! empty($filters['operation_type'])) {
             $properties->where('operation_type', $filters['operation_type']);
         }
 
-        if (! is_null($filters['max_value'])) {
+        if (! empty($filters['max_value'])) {
             $properties->where('price', '<=', (int) $filters['max_value']);
         }
 
-        if (! is_null($filters['neighborhood_id'])) {
+        // TODO: FILTER in case of no ID provided
+        if (! empty($filters['neighborhood_id'])) {
             $neighborhood = Neighborhood::findByEncryptedIdOrFail($filters['neighborhood_id']);
 
             if ($neighborhood->exists()) {

@@ -7,7 +7,7 @@ import MainLayout from "@/Layouts/MainLayout";
 import { Head, useForm } from "@inertiajs/react";
 
 export default function Homepage({ properties, neighborhoods }) {
-    const { data, setData, get, errors, processing } = useForm({
+    const { data, setData, get } = useForm({
         property_type: "",
         operation_type: "",
         max_value: "",
@@ -16,7 +16,7 @@ export default function Homepage({ properties, neighborhoods }) {
 
     const submitFilter = (e) => {
         e.preventDefault();
-        get(route('property.filter'));
+        get(route("property.filter"));
     };
 
     return (
@@ -86,7 +86,10 @@ export default function Homepage({ properties, neighborhoods }) {
                                 <SelectInput
                                     title="Bairro"
                                     onChange={(e) => {
-                                        setData("neighborhood_id", e.target.value);
+                                        setData(
+                                            "neighborhood_id",
+                                            e.target.value
+                                        );
                                     }}
                                 >
                                     <option value=""></option>

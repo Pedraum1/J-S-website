@@ -16,6 +16,7 @@ class CreateNeighborhoodOrFail
             $validated['neighborhood'] = $validation_array['new_neighborhood'];
         }
         unset($validation_array['new_neighborhood']);
+
         return $validation_array;
     }
 }

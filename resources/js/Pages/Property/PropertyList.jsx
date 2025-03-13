@@ -4,9 +4,24 @@ import PropertyListCard from "@/Components/PropertyListCard";
 import SelectInput from "@/Components/SelectInput";
 import StringInput from "@/Components/StringInput";
 import MainLayout from "@/Layouts/MainLayout";
-import { Head } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 
-export default function PropertyList({ properties, neighborhoods }) {
+export default function PropertyList({
+    properties,
+    neighborhoods,
+    applied_filters = {},
+}) {
+    const { data, setData, get } = useForm({
+        property_type  : applied_filters ? (applied_filters.property_type) : (""),
+        operation_type : applied_filters ? (applied_filters.operation_type) : (""),
+        max_value      : applied_filters ? (applied_filters.max_value) : (""),
+        neighborhood_id: applied_filters ? (applied_filters.neighborhood_id) : (""),
+    });
+
+    const submitForm = (e) => {
+        e.preventDefault();
+        get(route("property.filter"));
+    };
 
     return (
         <>
@@ -15,34 +30,123 @@ export default function PropertyList({ properties, neighborhoods }) {
                 <h3 className="text-2xl mt-3 text-center">
                     Encontre seu Imóvel ideal
                 </h3>
-                <article className="bg-white border border-neutral-200 shadow-xl rounded-xl px-4 py-8 my-4 mx-2 grid grid-cols-2 lg:grid-cols-6 xl:grid-cols-4 items-end xl:grid-rows-1 lg:grid-rows-2 md:grid-rows-3 grid-rows-4 gap-y-2 gap-x-2 md:max-w-5xl xl:mx-auto">
+                <form
+                    onSubmit={submitForm}
+                    className="bg-white border border-neutral-200 shadow-xl rounded-xl px-4 py-8 my-4 mx-2 grid grid-cols-2 lg:grid-cols-6 xl:grid-cols-4 items-end xl:grid-rows-1 lg:grid-rows-2 md:grid-rows-3 grid-rows-4 gap-y-2 gap-x-2 md:max-w-5xl xl:mx-auto"
+                >
                     <div className="xl:col-span-2 lg:col-span-3 col-span-2 md:col-span-1 row-span-1">
-                        <SelectInput title="Tipo de imóvel">
+                        <SelectInput
+                            value={data.property_type}
+                            title="Tipo de imóvel"
+                            onChange={(e) => {
+                                setData("property_type", e.target.value);
+                            }}
+                        >
                             <option></option>
-                            <option value="1">Casa</option>
-                            <option value="2">Apartamento</option>
-                            <option value="3">Terreno</option>
-                            <option value="4">Sala Comercial</option>
+                            <option
+                                selected={
+                                    applied_filters.property_type == "Casa"
+                                }
+                                value="Casa"
+                            >
+                                Casa
+                            </option>
+                            <option
+                                selected={
+                                    applied_filters.property_type ==
+                                    "Apartamento"
+                                }
+                                value="Apartamento"
+                            >
+                                Apartamento
+                            </option>
+                            <option
+                                selected={
+                                    applied_filters.property_type == "Terreno"
+                                }
+                                value="Terreno"
+                            >
+                                Terreno
+                            </option>
+                            <option
+                                selected={
+                                    applied_filters.property_type == "Sala"
+                                }
+                                value="Sala"
+                            >
+                                Sala
+                            </option>
+                            <option
+                                selected={
+                                    applied_filters.property_type ==
+                                    "Ponto Comercial"
+                                }
+                                value="Ponto Comercial"
+                            >
+                                Ponto Comercial
+                            </option>
                         </SelectInput>
                     </div>
                     <div className="xl:col-span-2 lg:col-span-3 col-span-2 md:col-span-1 row-span-1">
-                        <SelectInput title="Tipo de operação">
+                        <SelectInput
+                            value={data.operation_type}
+                            onChange={(e) => {
+                                setData("operation_type", e.target.value);
+                            }}
+                            title="Tipo de operação"
+                        >
                             <option></option>
-                            <option value="1">Aluguel</option>
-                            <option value="2">Compra</option>
-                            <option value="3">Temporada</option>
+                            <option
+                                selected={
+                                    applied_filters.operation_type == "Aluguel"
+                                }
+                                value="Aluguel"
+                            >
+                                Aluguel
+                            </option>
+                            <option
+                                selected={
+                                    applied_filters.operation_type == "Venda"
+                                }
+                                value="Venda"
+                            >
+                                Venda
+                            </option>
+                            <option
+                                selected={
+                                    applied_filters.operation_type ==
+                                    "Temporada"
+                                }
+                                value="Temporada"
+                            >
+                                Temporada
+                            </option>
                         </SelectInput>
                     </div>
                     <div className="lg:col-span-2 col-span-1 row-span-1">
-                        <StringInput title="Valor máximo" placeholder="R$" />
+                        <StringInput
+                            value={data.max_value}
+                            onChange={(e) => {
+                                setData("max_value", e.target.value);
+                            }}
+                            title="Valor máximo"
+                            placeholder="R$"
+                        />
                     </div>
                     <div className="lg:col-span-2 col-span-1 row-span-1">
-                        <SelectInput title="Bairro">
+                        <SelectInput
+                            value={data.neighborhood_id}
+                            onChange={(e) => {
+                                setData("neighborhood_id", e.target.value);
+                            }}
+                            title="Bairro"
+                        >
                             <option value=""></option>
                             {neighborhoods.map((neighborhood) => (
                                 <option
-                                    key={neighborhood.id}
-                                    value={neighborhood.id}
+                                    key={neighborhood.encrypted_id}
+                                    value={neighborhood.encrypted_id}
+                                    selected={neighborhood.name == applied_filters.neighborhood_name}
                                 >
                                     {neighborhood.name}
                                 </option>
@@ -50,11 +154,9 @@ export default function PropertyList({ properties, neighborhoods }) {
                         </SelectInput>
                     </div>
                     <div className="mt-4 xl:col-span-4 lg:col-span-2 col-span-2 row-span-1 w-full">
-                        <ActionButton>
-                            Filtrar
-                        </ActionButton>
+                        <ActionButton type="submit">Filtrar</ActionButton>
                     </div>
-                </article>
+                </form>
 
                 <article className="p-4 my-4 mx-2 flex flex-col gap-y-4">
                     {properties.data.map((property) => (
