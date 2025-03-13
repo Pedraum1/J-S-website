@@ -19,7 +19,9 @@ export default function PropertyPage() {
 
     return (
         <>
-            <Head title={`${property.street}, ${property.street_number} - ${property.neighborhood}/${property.city}`} />
+            <Head
+                title={`${property.street}, ${property.street_number} - ${property.neighborhood}/${property.city}`}
+            />
             <MainLayout>
                 <article className="h-96 xl:h-80 2xl:h-[700px]">
                     <Carousel
@@ -31,15 +33,36 @@ export default function PropertyPage() {
                         ))}
                     </Carousel>
                 </article>
-                <h1 className="text-3xl font-light my-4 md:w-3/4 mx-auto">{property.street}, {property.street_number} - {property.neighborhood}/{property.city}</h1>
+                <h1 className="text-3xl font-light my-4 md:w-3/4 mx-auto">
+                    {property.street}, {property.street_number} -{" "}
+                    {property.neighborhood}/{property.city}
+                </h1>
                 <article className="md:w-3/4 w-[95%] bg-neutral-50 border border-neutral-200 mx-auto mt-4 mb-8 shadow-zinc-400 shadow-xl rounded-3xl p-4">
                     <header className="flex flex-wrap flex-row justify-center gap-y-3 mb-4 w-[90%] mx-auto">
-                        <PropertyInfoLabel title="aluguel" info={"R$" + property.price + ",00"}/>
-                        <PropertyInfoLabel title="quartos" info={property.rooms}/>
-                        <PropertyInfoLabel title="suítes" info={property.master_bedrooms}/>
-                        <PropertyInfoLabel title="garagens" info={property.parking_spots}/>
-                        <PropertyInfoLabel title="banheiros" info={property.bathrooms}/>
-                        <PropertyInfoLabel title="área total" info={property.area_size + " m²"}/>
+                        <PropertyInfoLabel
+                            title="aluguel"
+                            info={"R$" + property.price + ",00"}
+                        />
+                        <PropertyInfoLabel
+                            title="quartos"
+                            info={property.bedrooms}
+                        />
+                        <PropertyInfoLabel
+                            title="suítes"
+                            info={property.master_bedrooms}
+                        />
+                        <PropertyInfoLabel
+                            title="garagens"
+                            info={property.parking_spots}
+                        />
+                        <PropertyInfoLabel
+                            title="banheiros"
+                            info={property.bathrooms}
+                        />
+                        <PropertyInfoLabel
+                            title="área total"
+                            info={property.area_size + " m²"}
+                        />
                     </header>
 
                     <hr />
@@ -56,7 +79,9 @@ export default function PropertyPage() {
                                     alt="Extra large avatar"
                                 ></img>
                                 <div>
-                                    <h5 className="font-medium">{agent.name}</h5>
+                                    <h5 className="font-medium">
+                                        {agent.name}
+                                    </h5>
                                     <p>CRECI - {agent.creci_number} </p>
                                     <p>
                                         <i className="fa-solid fa-phone"></i>{" "}
@@ -66,13 +91,45 @@ export default function PropertyPage() {
                             </div>
                         </div>
                         <div className="xl:w-2/3 w-full">
-                            <h3 className="font-medium md:text-3xl text-xl">Cômodos</h3>
+                            <h3 className="font-medium md:text-3xl text-xl">
+                                Cômodos
+                            </h3>
                             <div className="flex flex-row gap-x-2 mt-2">
-                                {/* TODO:Insert dynamically property's rooms */}
-                                <RoomCard text="ababa" />
+                                <RoomCard
+                                    room_name={"Sala"}
+                                    rooms={property.rooms}
+                                ></RoomCard>
+                                <RoomCard
+                                    room_name={"Quarto"}
+                                    rooms={property.bedrooms}
+                                ></RoomCard>
+                                <RoomCard
+                                    room_name={"Suíte"}
+                                    rooms={property.master_bedrooms}
+                                ></RoomCard>
+                                <RoomCard
+                                    room_name={"Banheiro"}
+                                    rooms={property.bathrooms}
+                                ></RoomCard>
+                                <RoomCard
+                                    room_name={"Quarto"}
+                                    rooms={property.kitchens}
+                                ></RoomCard>
+                                <RoomCard
+                                    room_name={"Área"}
+                                    rooms={property.service_rooms}
+                                    complement="de Serviço"
+                                ></RoomCard>
+                                <RoomCard
+                                    room_name={"Vaga"}
+                                    rooms={property.parking_spots}
+                                    complement="de Garagem"
+                                ></RoomCard>
                             </div>
                             <hr className="my-4" />
-                            <h3 className="font-medium md:text-3xl text-xl">Descrição</h3>
+                            <h3 className="font-medium md:text-3xl text-xl">
+                                Descrição
+                            </h3>
                             <p className="whitespace-pre-line md:text-base text-sm text-justify break-words mt-6">
                                 {property.description}
                             </p>
