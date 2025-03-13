@@ -12,4 +12,6 @@ class Neighborhood extends Model
     protected $table = 'neighborhoods';
 
     protected $fillable = ['name'];
+
+    protected $hidden = ['id'];
 }

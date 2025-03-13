@@ -37,6 +37,10 @@ class Property extends Model
         'parking_spots',
     ];
 
+    protected $hidden = [
+        'id', 'agent_id',
+    ];
+
     public static function property_types(): array
     {
         return ['Casa', 'Apartamento', 'Terreno', 'Ponto Comercial', 'Sala'];

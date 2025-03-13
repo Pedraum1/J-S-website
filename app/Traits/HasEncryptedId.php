@@ -12,11 +12,12 @@ trait HasEncryptedId
      *
      * @return string
      */
-    public function encryptId(): void
+    public function encryptId(string $property_name = 'id'): void
     {
-        $encrypted_id = Encryption::encrypt($this->id);
-        $this->makeHidden('id');
-        $this->setAttribute('encrypted_id', $encrypted_id);
+        if (isset($this->$property_name) || array_key_exists($property_name, $this->attributes)) {
+            $encrypted_property = Encryption::encrypt($this->$property_name);
+            $this->setAttribute('encrypted_'.$property_name, $encrypted_property);
+        }
     }
 
     /**
