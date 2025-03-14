@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
         Route::put('/{encrypted_id}/favorite', 'favorite')->name('dashboard.favorite');
 
         Route::delete('/{encrypted_id}', 'destroy')->name('dashboard.destroy');
+
+        Route::get('/imagens/{encrypted_id}','show_images')->name('dashboard.edit_image');
+        Route::patch('update/imagens/{encrypted_id','update_images')->name('dashboard.update_image');
     });
 });
 

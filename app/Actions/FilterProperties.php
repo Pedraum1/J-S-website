@@ -26,7 +26,6 @@ class FilterProperties
             $properties->where('price', '<=', (int) $filters['max_value']);
         }
 
-        // TODO: FILTER in case of no ID provided
         if (! empty($filters['neighborhood_id'])) {
             $neighborhood = Neighborhood::findByEncryptedIdOrFail($filters['neighborhood_id']);
 

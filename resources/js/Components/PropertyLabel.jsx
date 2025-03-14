@@ -3,22 +3,21 @@ import ActionButton from "./ActionButton";
 import { Link, router } from "@inertiajs/react";
 
 export default function PropertyLabel({ property }) {
-
     const [favorite, setFavorite] = useState(property.is_favorite);
     const [active, setActive] = useState(property.is_active);
 
-    const deleteProperty = (id) => {
+    const deleteProperty = () => {
         router.delete(
-            `/dashboard/${id}`,
+            route("dashboard.delete", property.encrypted_id),
             {},
             { preserveScroll: true }
         );
-    }
+    };
 
     const updateFavorite = () => {
         setFavorite(!favorite);
         router.put(
-            `/dashboard/${property.encrypted_id}/favorite`,
+            route("dashboard.favorite", property.encrypted_id),
             {},
             { preserveScroll: true }
         );
@@ -27,11 +26,20 @@ export default function PropertyLabel({ property }) {
     const updateActive = () => {
         setActive(!active);
         router.put(
-            `/dashboard/${property.encrypted_id}/toggle`,
+            route("dashboard.toggle", property.encrypted_id),
             {},
             { preserveScroll: true }
         );
     };
+
+    const redirectEdit = () => {
+        router.get(route("dashboard.edit_image", property.encrypted_id));
+    };
+
+    const redirectEditImage = () => {
+        router.get(route("dashboard.edit_image"), property.encrypted_id);
+    };
+
     return (
         <tr
             className={`border-b border-gray-200 transition-collors duration-150 ease-out ${
@@ -45,8 +53,13 @@ export default function PropertyLabel({ property }) {
                 {property.property_type}
             </th>
             <td className="px-6 py-4">
-                {property.street}, {property.street_number} -{" "}
-                {property.neighborhood}
+                <Link
+                    href={route("property.description", property.encrypted_id)}
+                    className="hover:underline text-blue-500"
+                >
+                    {property.street}, {property.street_number} -{" "}
+                    {property.neighborhood}
+                </Link>
             </td>
             <td className="px-6 py-4">R$ {property.price},00</td>
             <td className="px-6 py-4">
@@ -54,32 +67,50 @@ export default function PropertyLabel({ property }) {
                     className="flex rounded-md shadow-xs overflow-hidden"
                     role="group"
                 >
-                    <Link href={route('dashboard.edit',property.encrypted_id)}>
-                    <ActionButton>
+                    <ActionButton
+                        className="flex-1"
+                        action={() => {
+                            redirectEditImage();
+                        }}
+                    >
+                        <i class="fa-solid fa-image"></i>
+                    </ActionButton>
+                    <ActionButton
+                        className="flex-1"
+                        action={() => {
+                            redirectEdit();
+                        }}
+                    >
                         <i className="fa-regular fa-pen-to-square"></i>
                     </ActionButton>
-                    </Link>
-                    <ActionButton action={() => deleteProperty(property.encrypted_id)}>
+                    <ActionButton
+                        className="flex-1"
+                        action={() => deleteProperty(property.encrypted_id)}
+                    >
                         <i className="fa-regular fa-trash-can"></i>
                     </ActionButton>
-                    {favorite ? (
-                        <ActionButton action={() => updateFavorite()}>
+
+                    <ActionButton
+                        className="flex-1"
+                        action={() => updateFavorite()}
+                    >
+                        {favorite ? (
                             <i className="fa-solid fa-star"></i>
-                        </ActionButton>
-                    ) : (
-                        <ActionButton action={() => updateFavorite()}>
+                        ) : (
                             <i className="fa-regular fa-star"></i>
-                        </ActionButton>
-                    )}
-                    {active ? (
-                        <ActionButton action={() => updateActive()}>
+                        )}
+                    </ActionButton>
+
+                    <ActionButton
+                        className="flex-1"
+                        action={() => updateActive()}
+                    >
+                        {active ? (
                             <i className="fa-regular fa-eye"></i>
-                        </ActionButton>
-                    ) : (
-                        <ActionButton action={() => updateActive()}>
+                        ) : (
                             <i className="fa-solid fa-eye-slash"></i>
-                        </ActionButton>
-                    )}
+                        )}
+                    </ActionButton>
                 </div>
             </td>
         </tr>

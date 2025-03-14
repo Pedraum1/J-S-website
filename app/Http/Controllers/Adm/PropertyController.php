@@ -64,14 +64,7 @@ class PropertyController extends Controller
 
     }
 
-    /**
-     * Display the specified property.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified property.
      */
@@ -92,27 +85,42 @@ class PropertyController extends Controller
         foreach ($neighborhoods as $neighborhood) {
             $agent->encryptId();
         }
-
+        
         return Inertia::render('Dashboard/EditProperty', ['property' => $property, 'neighborhoods' => $neighborhoods, 'agents' => $agents]);
     }
-
+    
     /**
      * Update the specified property in storage.
      */
     public function update(PropertyStoreRequest $request, string $encrypted_id)
     {
         $validated = $request->validated();
-
+        
         $property = Property::find(Encryption::decrypt($encrypted_id));
         $validated = CreateNeighborhoodOrFail::handle($validated);
-
+        
         $validated['agent_id'] = Encryption::decrypt($validated['agent_id']);
-
+        
         $property->update($validated);
-
+        
         return redirect(route('dashboard'));
     }
 
+    /**
+     * Display the specified property.
+     */
+    public function show_images(string $encrypted_id)
+    {
+        //
+    }
+    /**
+     * Display the specified property.
+     */
+    public function update_images(string $encrypted_id)
+    {
+        //
+    }
+    
     /**
      * Toggles the visibility of the specified property.
      */
