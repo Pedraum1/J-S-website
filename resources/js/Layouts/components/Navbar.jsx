@@ -13,10 +13,10 @@ export default function Navbar() {
                         <Tittle />
                     </div>
                     <ul className="flex flex-row justify-center lg:gap-x-12 gap-x-4 text-lg items-center">
-                        <NavbarLink title="O que é a J&S?" link="/sobre" />
-                        <NavbarLink title="Nossos Serviços" link="/servicos" />
+                        <NavbarLink title="O que é a J&S?" link={route('about')} />
+                        <NavbarLink title="Nossos Serviços" link={route('services')} />
                         <NavbarLink title="Imóveis" link={route('property.list')} />
-                        <NavbarLink title="Contato" link="/contato" />
+                        <NavbarLink title="Contato" link={route('contact')} />
                     </ul>
                     <ul>
                         {auth.user ? (

@@ -7,7 +7,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(GuestPagesController::class)->group(function () {
-    Route::get('/', [GuestPagesController::class, 'home']);
+    Route::get('/', 'home')->name('home');
+    Route::get('/sobre_nos', 'about')->name('about');
+    Route::get('/servicos', 'services')->name('services');
+    Route::get('/contato','contact')->name('contact');
+    Route::post('/contato','send')->name('send');
 });
 
 Route::controller(PropertyPagesController::class)->prefix('/imovel')->group(function () {
