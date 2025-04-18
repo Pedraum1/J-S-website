@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ActionButton from "./ActionButton";
+import ActionButton from "../../../../Components/ActionButton.jsx";
 import { Link, router } from "@inertiajs/react";
 
 export default function PropertyLabel({ property }) {

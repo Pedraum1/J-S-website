@@ -1,9 +1,9 @@
-import ActionButton from "@/Components/ActionButton";
-import Outdoor from "@/Components/Outdoor";
-import PropertyCard from "@/Components/PropertyCard";
-import SelectInput from "@/Components/SelectInput";
-import StringInput from "@/Components/StringInput";
-import MainLayout from "@/Layouts/MainLayout";
+import ActionButton from "@/Components/ActionButton.jsx";
+import Outdoor from "@/Pages/Homepage/components/Outdoor.jsx";
+import PropertyCard from "@/Pages/Homepage/components/PropertyCard.jsx";
+import SelectInput from "@/Components/SelectInput.jsx";
+import StringInput from "@/Components/StringInput.jsx";
+import MainLayout from "@/Layouts/MainLayout.jsx";
 import { Head, useForm } from "@inertiajs/react";
 
 export default function Homepage({ properties, neighborhoods }) {

@@ -1,5 +1,5 @@
-import PropertyForm from "@/Components/propertyForm";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import PropertyForm from "@/Pages/Dashboard/Property/components/PropertyForm.jsx";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import { Head, usePage } from "@inertiajs/react";
 
 export default function EditProperty() {

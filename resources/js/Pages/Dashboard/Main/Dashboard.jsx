@@ -1,7 +1,7 @@
-import ActionButton from "@/Components/ActionButton";
-import PaginationButtonGroup from "@/Components/PaginationButtonGroup";
-import PropertyLabel from "@/Components/PropertyLabel";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import ActionButton from "@/Components/ActionButton.jsx";
+import PaginationButtonGroup from "@/Components/PaginationButtonGroup.jsx";
+import PropertyLabel from "@/Pages/Dashboard/Main/components/PropertyLabel.jsx";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
 import { Head, Link, usePage } from "@inertiajs/react";
 
 export default function Dashboard() {

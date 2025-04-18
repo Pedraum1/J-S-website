@@ -1,8 +1,8 @@
 import Logo from '@/Components/Logo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
-import { Link, usePage } from '@inertiajs/react';
+import Dropdown from '@/Layouts/components/Dropdown.jsx';
+import NavLink from '@/Layouts/components/NavLink.jsx';
+import ResponsiveNavLink from '@/Layouts/components/ResponsiveNavLink.jsx';
+import { usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {

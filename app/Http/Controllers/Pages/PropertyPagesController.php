@@ -25,7 +25,7 @@ class PropertyPagesController extends Controller
             $neighborhood->encryptId();
         }
 
-        return Inertia::render('Property/PropertyList',
+        return Inertia::render('Property/List/PropertyList',
             [
                 'properties' => $properties,
                 'neighborhoods' => $neighborhoods,
@@ -61,7 +61,7 @@ class PropertyPagesController extends Controller
             'neighborhood_name' => $searched_neighborhood->name ?? null,
         ];
 
-        return Inertia::render('Property/PropertyList',
+        return Inertia::render('Property/List/PropertyList',
             [
                 'properties' => $properties,
                 'neighborhoods' => $neighborhoods,
@@ -79,7 +79,7 @@ class PropertyPagesController extends Controller
         if (! is_null($data)) {
             $data->encryptId();
 
-            return Inertia::render('Property/PropertyPage', ['property' => $data->toArray()]);
+            return Inertia::render('Property/Description/PropertyPage', ['property' => $data->toArray()]);
         }
 
         return redirect()->route('property.list');

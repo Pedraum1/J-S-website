@@ -1,9 +1,9 @@
 import { Carousel } from "flowbite-react";
-import MainLayout from "@/Layouts/MainLayout";
+import MainLayout from "@/Layouts/MainLayout.jsx";
 import { Head, usePage } from "@inertiajs/react";
-import CarouselControl from "@/Components/CarouselControl";
-import RoomCard from "@/Components/RoomCard";
-import PropertyInfoLabel from "@/Components/PropertyInfoLabel";
+import CarouselControl from "@/Pages/Property/Description/components/CarouselControl.jsx";
+import RoomCard from "@/Pages/Property/Description/components/RoomCard.jsx";
+import PropertyInfoLabel from "@/Pages/Property/Description/components/PropertyInfoLabel.jsx";
 
 export default function PropertyPage() {
     const { property } = usePage().props;

@@ -1,9 +1,9 @@
-import ActionButton from "@/Components/ActionButton";
-import PaginationButtonGroup from "@/Components/PaginationButtonGroup";
-import PropertyListCard from "@/Components/PropertyListCard";
-import SelectInput from "@/Components/SelectInput";
-import StringInput from "@/Components/StringInput";
-import MainLayout from "@/Layouts/MainLayout";
+import ActionButton from "@/Components/ActionButton.jsx";
+import PaginationButtonGroup from "@/Components/PaginationButtonGroup.jsx";
+import PropertyListCard from "@/Pages/Property/List/components/PropertyListCard.jsx";
+import SelectInput from "@/Components/SelectInput.jsx";
+import StringInput from "@/Components/StringInput.jsx";
+import MainLayout from "@/Layouts/MainLayout.jsx";
 import { Head, useForm } from "@inertiajs/react";
 
 export default function PropertyList({

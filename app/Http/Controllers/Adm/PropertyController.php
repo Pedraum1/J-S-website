@@ -24,7 +24,7 @@ class PropertyController extends Controller
             $property->encryptId();
         }
 
-        return Inertia::render('Dashboard/Dashboard', ['properties' => $properties]);
+        return Inertia::render('Dashboard/Main/Dashboard', ['properties' => $properties]);
     }
 
     /**
@@ -39,7 +39,7 @@ class PropertyController extends Controller
             return $agent;
         });
 
-        return Inertia::render('Dashboard/AddProperty', ['neighborhoods' => $neighborhoods, 'agents' => $agents]);
+        return Inertia::render('Dashboard/Property/AddProperty', ['neighborhoods' => $neighborhoods, 'agents' => $agents]);
     }
 
     /**
@@ -64,7 +64,7 @@ class PropertyController extends Controller
 
     }
 
-    
+
     /**
      * Show the form for editing the specified property.
      */
@@ -85,24 +85,24 @@ class PropertyController extends Controller
         foreach ($neighborhoods as $neighborhood) {
             $agent->encryptId();
         }
-        
-        return Inertia::render('Dashboard/EditProperty', ['property' => $property, 'neighborhoods' => $neighborhoods, 'agents' => $agents]);
+
+        return Inertia::render('Dashboard/Property/EditProperty', ['property' => $property, 'neighborhoods' => $neighborhoods, 'agents' => $agents]);
     }
-    
+
     /**
      * Update the specified property in storage.
      */
     public function update(PropertyStoreRequest $request, string $encrypted_id)
     {
         $validated = $request->validated();
-        
+
         $property = Property::find(Encryption::decrypt($encrypted_id));
         $validated = CreateNeighborhoodOrFail::handle($validated);
-        
+
         $validated['agent_id'] = Encryption::decrypt($validated['agent_id']);
-        
+
         $property->update($validated);
-        
+
         return redirect(route('dashboard'));
     }
 
@@ -111,16 +111,16 @@ class PropertyController extends Controller
      */
     public function show_images(string $encrypted_id)
     {
-        //
+        //TODO: Create page for property's image display
     }
     /**
      * Display the specified property.
      */
     public function update_images(string $encrypted_id)
     {
-        //
+        //TODO: Create page for update property's page
     }
-    
+
     /**
      * Toggles the visibility of the specified property.
      */

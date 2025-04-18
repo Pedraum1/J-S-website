@@ -25,7 +25,7 @@ class GuestPagesController extends Controller
             return $property;
         });
 
-        return Inertia::render('Homepage', [
+        return Inertia::render('Homepage/Homepage', [
             'properties' => $properties,
             'neighborhoods' => $neighborhoods,
         ]);

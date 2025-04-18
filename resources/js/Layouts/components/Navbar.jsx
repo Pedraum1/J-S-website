@@ -1,7 +1,6 @@
-import { usePage } from "@inertiajs/react";
-import NavbarLink from "./NavbarLink";
-import Sidebar from "./Sidebar";
-import Tittle from "./Tittle";
+import {Link, usePage} from "@inertiajs/react";
+import Sidebar from "./Sidebar.jsx";
+import Tittle from "../../Components/Tittle.jsx";
 
 export default function Navbar() {
     const { auth } = usePage().props;
@@ -35,5 +34,17 @@ export default function Navbar() {
                 </div>
             </div>
         </nav>
+    );
+}
+
+function NavbarLink({title, link}){
+    return (
+        <li>
+            <Link href={link}>
+                <h6 className="hover:border-b-red-800 border-b-transparent border-b transition-colors duration-200 ease-out">
+                    {title}
+                </h6>
+            </Link>
+        </li>
     );
 }

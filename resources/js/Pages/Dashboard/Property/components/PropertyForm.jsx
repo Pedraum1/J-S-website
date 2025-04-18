@@ -1,9 +1,9 @@
 import { useForm, usePage } from "@inertiajs/react";
-import ActionButton from "./ActionButton";
-import SelectInput from "./SelectInput";
-import StringInput from "./StringInput";
-import ErrorFlashMessage from "./ErrorFlashMessage";
-import Spinner from "./Spinner";
+import ActionButton from "../../../../Components/ActionButton.jsx";
+import SelectInput from "../../../../Components/SelectInput.jsx";
+import StringInput from "../../../../Components/StringInput.jsx";
+import ErrorFlashMessage from "../../../../Components/ErrorFlashMessage.jsx";
+import Spinner from "../../../../Components/Spinner.jsx";
 
 export default function PropertyForm({ isEditing = false }) {
     const property = usePage().props.property;
