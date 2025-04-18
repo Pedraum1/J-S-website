@@ -1,15 +1,13 @@
 import { Link } from "@inertiajs/react";
 
 export default function PaginationButton({ link, arrayLength, currentPage }) {
-    console.log(link);
-
     const getPaginationText = (label) => {
         if(label == "pagination.previous"){return "&#x3c;"}
         if(label == "pagination.next"){return "&#x3e;"}
         return label;
 
     }
-    
+
     return (
         <Link href={link.url}>
             <button

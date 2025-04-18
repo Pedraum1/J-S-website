@@ -33,7 +33,7 @@ export default function PropertyLabel({ property }) {
     };
 
     const redirectEdit = () => {
-        router.get(route("dashboard.edit_image", property.encrypted_id));
+        router.get(route("dashboard.edit", property.encrypted_id));
     };
 
     const redirectEditImage = () => {
@@ -67,6 +67,7 @@ export default function PropertyLabel({ property }) {
                     className="flex rounded-md shadow-xs overflow-hidden"
                     role="group"
                 >
+                    {/*Edit property images*/}
                     <ActionButton
                         className="flex-1"
                         action={() => {
@@ -75,6 +76,7 @@ export default function PropertyLabel({ property }) {
                     >
                         <i className="fa-solid fa-image"></i>
                     </ActionButton>
+                    {/*Edit property images*/}
                     <ActionButton
                         className="flex-1"
                         action={() => {
