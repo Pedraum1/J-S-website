@@ -11,7 +11,7 @@ export default function PropertyForm({ isEditing = false }) {
     const agents = usePage().props.agents;
 
     const { data, setData, post, patch, errors, processing } = useForm({
-        is_active       : property ? (property.is_active) : (true),
+        is_active       : property ? (property.is_active) : true,
         description     : property ? (property.description ?? "") : (""),
         street          : property ? (property.street ?? "") : (""),
         street_number   : property ? (property.street_number ?? 0) : (0),
@@ -78,14 +78,14 @@ export default function PropertyForm({ isEditing = false }) {
                             >
                                 <option value="">Tipo de imóvel</option>
                                 <option
-                                    selected={data.property_type == "Casa"}
+                                    selected={data.property_type === "Casa"}
                                     value="Casa"
                                 >
                                     Casa
                                 </option>
                                 <option
                                     selected={
-                                        data.property_type == "Apartamento"
+                                        data.property_type === "Apartamento"
                                     }
                                     value="Apartamento"
                                 >
@@ -93,20 +93,20 @@ export default function PropertyForm({ isEditing = false }) {
                                 </option>
                                 <option
                                     selected={
-                                        data.property_type == "Ponto Comercial"
+                                        data.property_type === "Ponto Comercial"
                                     }
                                     value="Ponto Comercial"
                                 >
                                     Ponto comercial
                                 </option>
                                 <option
-                                    selected={data.property_type == "Sala"}
+                                    selected={data.property_type === "Sala"}
                                     value="Sala"
                                 >
                                     Sala
                                 </option>
                                 <option
-                                    selected={data.property_type == "Terreno"}
+                                    selected={data.property_type === "Terreno"}
                                     value="Terreno"
                                 >
                                     Terreno
@@ -259,19 +259,19 @@ export default function PropertyForm({ isEditing = false }) {
                         >
                             <option value="">Tipo de operação</option>
                             <option
-                                selected={data.operation_type == "Aluguel"}
+                                selected={data.operation_type === "Aluguel"}
                                 value="Aluguel"
                             >
                                 Aluguel
                             </option>
                             <option
-                                selected={data.operation_type == "Venda"}
+                                selected={data.operation_type === "Venda"}
                                 value="Venda"
                             >
                                 Venda
                             </option>
                             <option
-                                selected={data.operation_type == "Temporada"}
+                                selected={data.operation_type === "Temporada"}
                                 value="Temporada"
                             >
                                 Temporada
@@ -291,7 +291,7 @@ export default function PropertyForm({ isEditing = false }) {
                                 <option
                                     key={agent.name}
                                     value={agent.encrypted_id}
-                                    selected={data.agent_name == agent.name}
+                                    selected={data.agent_name === agent.name}
                                 >
                                     {agent.name}
                                 </option>
@@ -341,7 +341,7 @@ export default function PropertyForm({ isEditing = false }) {
                                 key={neighborhood.name}
                                 value={neighborhood.name}
                                 selected={
-                                    data.neighborhood == neighborhood.name
+                                    data.neighborhood === neighborhood.name
                                 }
                             >
                                 {neighborhood.name}
@@ -358,7 +358,7 @@ export default function PropertyForm({ isEditing = false }) {
                     >
                         <option value="">Cidade</option>
                         <option
-                            selected={data.city == "Fortaleza"}
+                            selected={data.city === "Fortaleza"}
                             value="Fortaleza"
                         >
                             Fortaleza

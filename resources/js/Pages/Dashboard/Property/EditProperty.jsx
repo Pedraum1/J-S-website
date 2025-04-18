@@ -1,6 +1,6 @@
 import PropertyForm from "@/Pages/Dashboard/Property/components/PropertyForm.jsx";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.jsx";
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 
 export default function EditProperty() {
     return (

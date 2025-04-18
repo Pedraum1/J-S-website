@@ -73,7 +73,7 @@ export default function PropertyLabel({ property }) {
                             redirectEditImage();
                         }}
                     >
-                        <i class="fa-solid fa-image"></i>
+                        <i className="fa-solid fa-image"></i>
                     </ActionButton>
                     <ActionButton
                         className="flex-1"

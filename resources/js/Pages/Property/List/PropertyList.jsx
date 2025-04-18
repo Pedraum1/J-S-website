@@ -45,7 +45,7 @@ export default function PropertyList({
                             <option></option>
                             <option
                                 selected={
-                                    applied_filters.property_type == "Casa"
+                                    applied_filters.property_type === "Casa"
                                 }
                                 value="Casa"
                             >
@@ -53,7 +53,7 @@ export default function PropertyList({
                             </option>
                             <option
                                 selected={
-                                    applied_filters.property_type ==
+                                    applied_filters.property_type ===
                                     "Apartamento"
                                 }
                                 value="Apartamento"
@@ -62,7 +62,7 @@ export default function PropertyList({
                             </option>
                             <option
                                 selected={
-                                    applied_filters.property_type == "Terreno"
+                                    applied_filters.property_type === "Terreno"
                                 }
                                 value="Terreno"
                             >
@@ -70,7 +70,7 @@ export default function PropertyList({
                             </option>
                             <option
                                 selected={
-                                    applied_filters.property_type == "Sala"
+                                    applied_filters.property_type === "Sala"
                                 }
                                 value="Sala"
                             >
@@ -78,7 +78,7 @@ export default function PropertyList({
                             </option>
                             <option
                                 selected={
-                                    applied_filters.property_type ==
+                                    applied_filters.property_type ===
                                     "Ponto Comercial"
                                 }
                                 value="Ponto Comercial"
@@ -98,7 +98,7 @@ export default function PropertyList({
                             <option></option>
                             <option
                                 selected={
-                                    applied_filters.operation_type == "Aluguel"
+                                    applied_filters.operation_type === "Aluguel"
                                 }
                                 value="Aluguel"
                             >
@@ -106,7 +106,7 @@ export default function PropertyList({
                             </option>
                             <option
                                 selected={
-                                    applied_filters.operation_type == "Venda"
+                                    applied_filters.operation_type === "Venda"
                                 }
                                 value="Venda"
                             >
@@ -114,7 +114,7 @@ export default function PropertyList({
                             </option>
                             <option
                                 selected={
-                                    applied_filters.operation_type ==
+                                    applied_filters.operation_type ===
                                     "Temporada"
                                 }
                                 value="Temporada"
@@ -146,7 +146,7 @@ export default function PropertyList({
                                 <option
                                     key={neighborhood.encrypted_id}
                                     value={neighborhood.encrypted_id}
-                                    selected={neighborhood.name == applied_filters.neighborhood_name}
+                                    selected={neighborhood.name === applied_filters.neighborhood_name}
                                 >
                                     {neighborhood.name}
                                 </option>

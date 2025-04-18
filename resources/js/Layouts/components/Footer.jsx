@@ -1,4 +1,3 @@
-import { Link } from "@inertiajs/react";
 import FooterLink from "../../Components/FooterLink.jsx";
 
 export default function Footer() {
